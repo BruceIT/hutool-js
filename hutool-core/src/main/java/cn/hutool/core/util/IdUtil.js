@@ -1,13 +1,3 @@
-package cn.hutool.core.util;
-
-import cn.hutool.core.exceptions.UtilException;
-import cn.hutool.core.lang.ObjectId;
-import cn.hutool.core.lang.Singleton;
-import cn.hutool.core.lang.Snowflake;
-import cn.hutool.core.lang.UUID;
-import cn.hutool.core.lang.id.NanoId;
-import cn.hutool.core.net.NetUtil;
-
 /**
  * ID生成器工具类，此工具类中主要封装：
  *
@@ -21,17 +11,19 @@ import cn.hutool.core.net.NetUtil;
  * @author looly
  * @since 4.1.13
  */
-public class IdUtil {
+import UUID from "../../../../java.lang/UUID";
+
+export default class IdUtil {
 
 	// ------------------------------------------------------------------- UUID
 
 	/**
 	 * 获取随机UUID
 	 *
-	 * @return 随机UUID
+	 * @return string
 	 */
-	public static String randomUUID() {
-		return UUID.randomUUID().toString();
+	 static /*String*/ randomUUID() {
+		return UUID.randomUUID();
 	}
 
 	/**
@@ -39,48 +31,13 @@ public class IdUtil {
 	 *
 	 * @return 简化的UUID，去掉了横线
 	 */
-	public static String simpleUUID() {
-		return UUID.randomUUID().toString(true);
+	 static  simpleUUID() {
+		return UUID.randomUUID().replaceAll('-',''9)
 	}
 
-	/**
-	 * 获取随机UUID，使用性能更好的ThreadLocalRandom生成UUID
-	 *
-	 * @return 随机UUID
-	 * @since 4.1.19
-	 */
-	public static String fastUUID() {
-		return UUID.fastUUID().toString();
-	}
 
-	/**
-	 * 简化的UUID，去掉了横线，使用性能更好的ThreadLocalRandom生成UUID
-	 *
-	 * @return 简化的UUID，去掉了横线
-	 * @since 4.1.19
-	 */
-	public static String fastSimpleUUID() {
-		return UUID.fastUUID().toString(true);
-	}
 
-	/**
-	 * 创建MongoDB ID生成策略实现<br>
-	 * ObjectId由以下几部分组成：
-	 *
-	 * <pre>
-	 * 1. Time 时间戳。
-	 * 2. Machine 所在主机的唯一标识符，一般是机器主机名的散列值。
-	 * 3. PID 进程ID。确保同一机器中不冲突
-	 * 4. INC 自增计数器。确保同一秒内产生objectId的唯一性。
-	 * </pre>
-	 * <p>
-	 * 参考：http://blog.csdn.net/qxc1281/article/details/54021882
-	 *
-	 * @return ObjectId
-	 */
-	public static String objectId() {
-		return ObjectId.next();
-	}
+
 
 	/**
 	 * 创建Twitter的Snowflake 算法生成器。
@@ -109,7 +66,7 @@ public class IdUtil {
 	 * @deprecated 此方法容易产生歧义：多个Snowflake实例产生的ID会产生重复，此对象在单台机器上必须单例！
 	 */
 	@Deprecated
-	public static Snowflake createSnowflake(long workerId, long datacenterId) {
+	 static Snowflake createSnowflake(long workerId, long datacenterId) {
 		return new Snowflake(workerId, datacenterId);
 	}
 
@@ -136,7 +93,7 @@ public class IdUtil {
 	 * @return {@link Snowflake}
 	 * @since 4.5.9
 	 */
-	public static Snowflake getSnowflake(long workerId, long datacenterId) {
+	 static Snowflake getSnowflake(long workerId, long datacenterId) {
 		return Singleton.get(Snowflake.class, workerId, datacenterId);
 	}
 
@@ -162,7 +119,7 @@ public class IdUtil {
 	 * @return {@link Snowflake}
 	 * @since 5.7.3
 	 */
-	public static Snowflake getSnowflake(long workerId) {
+	 static Snowflake getSnowflake(long workerId) {
 		return Singleton.get(Snowflake.class, workerId);
 	}
 
@@ -187,7 +144,7 @@ public class IdUtil {
 	 * @return {@link Snowflake}
 	 * @since 5.7.3
 	 */
-	public static Snowflake getSnowflake() {
+	 static Snowflake getSnowflake() {
 		return Singleton.get(Snowflake.class);
 	}
 
@@ -202,7 +159,7 @@ public class IdUtil {
 	 * @return 数据中心ID
 	 * @since 5.7.3
 	 */
-	public static long getDataCenterId(long maxDatacenterId) {
+	 static long getDataCenterId(long maxDatacenterId) {
 		long id = 1L;
 		final byte[] mac = NetUtil.getLocalHardwareAddress();
 		if (null != mac) {
@@ -227,7 +184,7 @@ public class IdUtil {
 	 * @return ID
 	 * @since 5.7.3
 	 */
-	public static long getWorkerId(long datacenterId, long maxWorkerId) {
+	 static long getWorkerId(long datacenterId, long maxWorkerId) {
 		final StringBuilder mpid = new StringBuilder();
 		mpid.append(datacenterId);
 		try {
@@ -249,7 +206,7 @@ public class IdUtil {
 	 * @return 随机NanoId
 	 * @since 5.7.5
 	 */
-	public static String nanoId() {
+	 static String nanoId() {
 		return NanoId.randomNanoId();
 	}
 
@@ -260,7 +217,7 @@ public class IdUtil {
 	 * @return 随机NanoId
 	 * @since 5.7.5
 	 */
-	public static String nanoId(int size) {
+	 static String nanoId(int size) {
 		return NanoId.randomNanoId(size);
 	}
 
@@ -271,7 +228,7 @@ public class IdUtil {
 	 * @return nextId
 	 * @since 5.7.18
 	 */
-	public static long getSnowflakeNextId() {
+	 static long getSnowflakeNextId() {
 		return getSnowflake().nextId();
 	}
 
@@ -282,7 +239,7 @@ public class IdUtil {
 	 * @return nextIdStr
 	 * @since 5.7.18
 	 */
-	public static String getSnowflakeNextIdStr() {
+	 static String getSnowflakeNextIdStr() {
 		return getSnowflake().nextIdStr();
 	}
 
