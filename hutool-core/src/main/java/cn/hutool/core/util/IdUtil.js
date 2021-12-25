@@ -15,7 +15,7 @@ import UUID from "../../../../java.lang/UUID";
 
 export default class IdUtil {
 
-	// ------------------------------------------------------------------- UUID
+
 
 	/**
 	 * 获取随机UUID
