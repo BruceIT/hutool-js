@@ -9,7 +9,7 @@ export class ArrayUtil  {
 	 * 数组是否为空
 	 *
 	 * @param array 数组
-	 * @return 是否为空
+	 * @return boolean
 	 */
 	static isEmpty(array) {
 		return array == null || array.length == 0;
@@ -615,141 +615,28 @@ export class ArrayUtil  {
 			return [];
 		}
 		if (start > end) {
-			int tmp = start;
+			const tmp = start;
 			start = end;
 			end = tmp;
 		}
 		if (end > length) {
 			if (start >= length) {
-				return newArray(array.getClass().getComponentType(), 0);
-			}
-			end = length;
-		}
-		return Arrays.copyOfRange(array, start, end);
-	}
-
-	/**
-	 * 获取子数组
-	 *
-	 * @param array 数组
-	 * @param start 开始位置（包括）
-	 * @param end   结束位置（不包括）
-	 * @return 新的数组
-	 * @since 4.0.6
-	 */
-	static Object[] sub(Object array, int start, int end) {
-		return sub(array, start, end, 1);
-	}
-
-	/**
-	 * 获取子数组
-	 *
-	 * @param array 数组
-	 * @param start 开始位置（包括）
-	 * @param end   结束位置（不包括）
-	 * @param step  步进
-	 * @return 新的数组
-	 * @since 4.0.6
-	 */
-	static Object[] sub(Object array, int start, int end, int step) {
-		int length = length(array);
-		if (start < 0) {
-			start += length;
-		}
-		if (end < 0) {
-			end += length;
-		}
-		if (start == length) {
-			return new Object[0];
-		}
-		if (start > end) {
-			int tmp = start;
-			start = end;
-			end = tmp;
-		}
-		if (end > length) {
-			if (start >= length) {
-				return new Object[0];
+				return [];
 			}
 			end = length;
 		}
 
-		if (step <= 1) {
-			step = 1;
-		}
 
-		final ArrayList<Object> list = new ArrayList<>();
-		for (int i = start; i < end; i += step) {
-			list.add(get(array, i));
+		const result = []
+		for(let i = start; i <end; i++){
+			result.push(array[i])
 		}
-
-		return list.toArray();
+		return  result
 	}
 
-	/**
-	 * 数组或集合转String
-	 *
-	 * @param obj 集合或数组对象
-	 * @return 数组字符串，与集合转字符串格式相同
-	 */
-	static String toString(Object obj) {
-		if (null == obj) {
-			return null;
-		}
 
-		if (obj instanceof long[]) {
-			return Arrays.toString((long[]) obj);
-		} else if (obj instanceof int[]) {
-			return Arrays.toString((int[]) obj);
-		} else if (obj instanceof short[]) {
-			return Arrays.toString((short[]) obj);
-		} else if (obj instanceof char[]) {
-			return Arrays.toString((char[]) obj);
-		} else if (obj instanceof byte[]) {
-			return Arrays.toString((byte[]) obj);
-		} else if (obj instanceof boolean[]) {
-			return Arrays.toString((boolean[]) obj);
-		} else if (obj instanceof float[]) {
-			return Arrays.toString((float[]) obj);
-		} else if (obj instanceof double[]) {
-			return Arrays.toString((double[]) obj);
-		} else if (ArrayUtil.isArray(obj)) {
-			// 对象数组
-			try {
-				return Arrays.deepToString((Object[]) obj);
-			} catch (Exception ignore) {
-				//ignore
-			}
-		}
 
-		return obj.toString();
-	}
 
-	/**
-	 * 获取数组长度<br>
-	 * 如果参数为{@code null}，返回0
-	 *
-	 * <pre>
-	 * ArrayUtil.length(null)            = 0
-	 * ArrayUtil.length([])              = 0
-	 * ArrayUtil.length([null])          = 1
-	 * ArrayUtil.length([true, false])   = 2
-	 * ArrayUtil.length([1, 2, 3])       = 3
-	 * ArrayUtil.length(["a", "b", "c"]) = 3
-	 * </pre>
-	 *
-	 * @param array 数组对象
-	 * @return 数组长度
-	 * @throws IllegalArgumentException 如果参数不为数组，抛出此异常
-	 * @see Array#getLength(Object)
-	 * @since 3.0.8
-	 */
-	static int length(Object array) throws IllegalArgumentException {
-		if (null == array) {
-			return 0;
-		}
-		return Array.getLength(array);
-	}
 
 	/**
 	 * 以 conjunction 为分隔符将数组转换为字符串
@@ -759,8 +646,8 @@ export class ArrayUtil  {
 	 * @param conjunction 分隔符
 	 * @return 连接后的字符串
 	 */
-	static  String join(T[] array, CharSequence conjunction) {
-		return join(array, conjunction, null, null);
+	static join(array,  conjunction) {
+		return array.join(conjunction)
 	}
 
 	/**
@@ -771,112 +658,31 @@ export class ArrayUtil  {
 	 * @param delimiter 分隔符
 	 * @param prefix    每个元素添加的前缀，null表示不添加
 	 * @param suffix    每个元素添加的后缀，null表示不添加
-	 * @return 连接后的字符串
-	 * @since 4.0.10
+	 * @return string|null
 	 */
-	static  String join(T[] array, CharSequence delimiter, String prefix, String suffix) {
+	static   join(array, delimiter, prefix, suffix) {
 		if (null == array) {
 			return null;
 		}
 
-		return StrJoiner.of(delimiter, prefix, suffix)
-				// 每个元素都添加前后缀
-				.setWrapElement(true)
-				.append(array)
-				.toString();
-	}
+		const result = [];
 
-	/**
-	 * 以 conjunction 为分隔符将数组转换为字符串
-	 *
-	 * @param          被处理的集合
-	 * @param array       数组
-	 * @param conjunction 分隔符
-	 * @param editor      每个元素的编辑器，null表示不编辑
-	 * @return 连接后的字符串
-	 * @since 5.3.3
-	 */
-	static  String join(T[] array, CharSequence conjunction, Editor editor) {
-		return StrJoiner.of(conjunction).append(array, (t) -> String.valueOf(editor.edit(t))).toString();
-	}
+		for(let len = array.length, i = 0; i <len; i++){
+			let v = array[i]
+			if(prefix != null){
+				v = prefix + "" + v;
+			}
+			if(suffix != null){
+				v = v + suffix;
+			}
 
-	/**
-	 * 以 conjunction 为分隔符将数组转换为字符串
-	 *
-	 * @param array       数组
-	 * @param conjunction 分隔符
-	 * @return 连接后的字符串
-	 */
-	static String join(Object array, CharSequence conjunction) {
-		if (null == array) {
-			return null;
-		}
-		if (false == isArray(array)) {
-			throw new IllegalArgumentException(StrUtil.format("[{}] is not a Array!", array.getClass()));
+			result.push(v)
 		}
 
-		return StrJoiner.of(conjunction).append(array).toString();
+		return result.join(delimiter)
 	}
 
-	/**
-	 * {@link ByteBuffer} 转byte数组
-	 *
-	 * @param bytebuffer {@link ByteBuffer}
-	 * @return byte数组
-	 * @since 3.0.1
-	 */
-	static byte[] toArray(ByteBuffer bytebuffer) {
-		if (bytebuffer.hasArray()) {
-			return Arrays.copyOfRange(bytebuffer.array(), bytebuffer.position(), bytebuffer.limit());
-		} else {
-			int oldPosition = bytebuffer.position();
-			bytebuffer.position(0);
-			int size = bytebuffer.limit();
-			byte[] buffers = new byte[size];
-			bytebuffer.get(buffers);
-			bytebuffer.position(oldPosition);
-			return buffers;
-		}
-	}
 
-	/**
-	 * 将集合转为数组
-	 *
-	 * @param            数组元素类型
-	 * @param iterator      {@link Iterator}
-	 * @param componentType 集合元素类型
-	 * @return 数组
-	 * @since 3.0.9
-	 */
-	static  T[] toArray(Iterator iterator, Class componentType) {
-		return toArray(CollUtil.newArrayList(iterator), componentType);
-	}
-
-	/**
-	 * 将集合转为数组
-	 *
-	 * @param            数组元素类型
-	 * @param iterable      {@link Iterable}
-	 * @param componentType 集合元素类型
-	 * @return 数组
-	 * @since 3.0.9
-	 */
-	static  T[] toArray(Iterable iterable, Class componentType) {
-		return toArray(CollectionUtil.toCollection(iterable), componentType);
-	}
-
-	/**
-	 * 将集合转为数组
-	 *
-	 * @param            数组元素类型
-	 * @param collection    集合
-	 * @param componentType 集合元素类型
-	 * @return 数组
-	 * @since 3.0.9
-	 */
-	static  T[] toArray(Collection collection, Class componentType) {
-		return collection.toArray(newArray(componentType, 0));
-	}
 
 	// ---------------------------------------------------------------------- remove
 
@@ -888,12 +694,10 @@ export class ArrayUtil  {
 	 * @param array 数组对象，可以是对象数组，也可以原始类型数组
 	 * @param index 位置，如果位置小于0或者大于长度，返回原数组
 	 * @return 去掉指定元素后的新数组或原数组
-	 * @throws IllegalArgumentException 参数对象不为数组对象
-	 * @since 3.0.8
 	 */
-	@SuppressWarnings("unchecked")
-	static  T[] remove(T[] array, int index) throws IllegalArgumentException {
-		return (T[]) remove((Object) array, index);
+	static   remove(array,  index) {
+		 array.splice(index, 1)
+		return  array
 	}
 
 	// ---------------------------------------------------------------------- removeEle
@@ -907,10 +711,9 @@ export class ArrayUtil  {
 	 * @param element 要移除的元素
 	 * @return 去掉指定元素后的新数组或原数组
 	 * @throws IllegalArgumentException 参数对象不为数组对象
-	 * @since 3.0.8
 	 */
-	static  T[] removeEle(T[] array, T element) throws IllegalArgumentException {
-		return remove(array, indexOf(array, element));
+	static   removeEle(array, element) {
+		return this.remove(array, this.indexOf(array, element));
 	}
 
 	// ---------------------------------------------------------------------- Reverse array
