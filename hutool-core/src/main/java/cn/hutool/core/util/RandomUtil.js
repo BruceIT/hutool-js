@@ -46,18 +46,21 @@ export default class RandomUtil {
 	 * @param max 最大数（不包含）
 	 * @return number
 	 */
-	static randomInt(min, max) {
-       if(min != null && max == null){
-	   		max = min;
-		   min = 0
-		}
-        if(min == null) {
-            min = 0;
+	static randomInt() {
+        const len = arguments.length
+
+        let min = 0;
+        let max = Number.MAX_VALUE / 2
+
+        switch (len){
+            case 1:
+                max = arguments[0]
+                break
+            case 2:
+                min = arguments[0]
+                max = arguments[1]
         }
-        if(max == null){
-            max = Number.MAX_VALUE / 2
-        }
-        return 	Math.floor(Math.random() * (max - min) + min );
+        return 	Math.floor(Math.random() * (max - min) + min) ;
 	}
 
 
@@ -73,27 +76,27 @@ export default class RandomUtil {
 	 * @param roundingMode 保留小数的模式 {@link RoundingMode}
 	 * @return number
 	 */
-	static randomDouble(min, max) {
-		if(min == null) {
-			min = 0;
+	static randomDouble() {
+		const len = arguments.length
+
+		let min = 0;
+		let max = Number.MAX_VALUE / 2
+
+		switch (len){
+			case 1:
+				max = arguments[0]
+				break
+			case 2:
+				min = arguments[0]
+				max = arguments[1]
 		}
-		if(max == null){
-			max = Number.MAX_VALUE / 2
-		}
+
 		return 	Math.random() * (max - min) + min ;
 	}
 
 
 
-	/**
-	 * 随机获得列表中的元素
-	 *
-	 * @param list 列表
-	 * @return 随机元素
-	 */
-	static  randomEle(list) {
-		return this.randomEle(list, list.size());
-	}
+
 
 	/**
 	 * 随机获得列表中的元素
@@ -103,40 +106,10 @@ export default class RandomUtil {
 	 * @param limit 限制列表的前N项
 	 * @return 随机元素
 	 */
-	static randomEle(list, limit) {
-		if (list.size() < limit) {
-			limit = list.size();
-		}
-		return list.get(this.randomInt(limit));
+	static randomEle(list) {
+		return list.get(this.randomInt());
 	}
 
-	/**
-	 * 随机获得数组中的元素
-	 *
-	 * @param <T>   元素类型
-	 * @param array 列表
-	 * @return 随机元素
-	 * @since 3.3.0
-	 */
-	public static <T> T randomEle(T[] array) {
-		return randomEle(array, array.length);
-	}
-
-	/**
-	 * 随机获得数组中的元素
-	 *
-	 * @param <T>   元素类型
-	 * @param array 列表
-	 * @param limit 限制列表的前N项
-	 * @return 随机元素
-	 * @since 3.3.0
-	 */
-	public static <T> T randomEle(T[] array, int limit) {
-		if (array.length < limit) {
-			limit = array.length;
-		}
-		return array[randomInt(limit)];
-	}
 
 	/**
 	 * 随机获得列表中的一定量元素
