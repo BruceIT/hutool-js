@@ -1,6 +1,8 @@
 /**
  * 数组工具类
  */
+import CompareUtil from "../comparator/CompareUtil";
+
 export class ArrayUtil  {
 
 	// ---------------------------------------------------------------------- isEmpty
@@ -444,7 +446,7 @@ export class ArrayUtil  {
 					return i;
 				}
 
-                if ( typeof el == 'string' && value != null && && el.toLowerCase() == value.toLowerCase()){
+                if ( typeof el == 'string' && value != null  && el.toLowerCase() == value.toLowerCase()){
                     return  i;
                 }
 			}
@@ -726,15 +728,14 @@ export class ArrayUtil  {
 	 * @param startIndexInclusive 开始位置（包含）
 	 * @param endIndexExclusive   结束位置（不包含）
 	 * @return 变更后的原数组
-	 * @since 3.0.9
 	 */
-	static  T[] reverse(T[] array, final int startIndexInclusive, final int endIndexExclusive) {
-		if (isEmpty(array)) {
+	static  reverse(array, startIndexInclusive,  endIndexExclusive) {
+		if (this.isEmpty(array)) {
 			return array;
 		}
-		int i = Math.max(startIndexInclusive, 0);
-		int j = Math.min(array.length, endIndexExclusive) - 1;
-		T tmp;
+		let i = Math.max(startIndexInclusive, 0);
+		let j = Math.min(array.length, endIndexExclusive) - 1;
+		let tmp;
 		while (j > i) {
 			tmp = array[j];
 			array[j] = array[i];
@@ -751,59 +752,35 @@ export class ArrayUtil  {
 	 * @param    数组元素类型
 	 * @param array 数组，会变更
 	 * @return 变更后的原数组
-	 * @since 3.0.9
 	 */
-	static  T[] reverse(T[] array) {
-		return reverse(array, 0, array.length);
+	static  reverse(array) {
+		return this.reverse(array, 0, array.length);
 	}
 
 	// ------------------------------------------------------------------------------------------------------------ min and max
 
-	/**
-	 * 取最小值
-	 *
-	 * @param          元素类型
-	 * @param numberArray 数字数组
-	 * @return 最小值
-	 * @since 3.0.9
-	 */
-	static <T extends Comparable<? super T>> T min(T[] numberArray) {
-		return min(numberArray, null);
-	}
+
 
 	/**
 	 * 取最小值
 	 *
-	 * @param          元素类型
 	 * @param numberArray 数字数组
-	 * @param comparator  比较器，null按照默认比较
 	 * @return 最小值
-	 * @since 5.3.4
 	 */
-	static <T extends Comparable<? super T>> T min(T[] numberArray, Comparator comparator) {
-		if (isEmpty(numberArray)) {
-			throw new IllegalArgumentException("Number array must not empty !");
+	static  min(numberArray) {
+		if (this.isEmpty(numberArray)) {
+			throw new Error("Number array must not empty !");
 		}
-		T min = numberArray[0];
-		for (T t : numberArray) {
-			if (CompareUtil.compare(min, t, comparator) > 0) {
+		let min = numberArray[0];
+		for (let t of numberArray) {
+			if (CompareUtil.compare(min, t) > 0) {
 				min = t;
 			}
 		}
 		return min;
 	}
 
-	/**
-	 * 取最大值
-	 *
-	 * @param          元素类型
-	 * @param numberArray 数字数组
-	 * @return 最大值
-	 * @since 3.0.9
-	 */
-	static <T extends Comparable<? super T>> T max(T[] numberArray) {
-		return max(numberArray, null);
-	}
+
 
 	/**
 	 * 取最大值
@@ -812,15 +789,14 @@ export class ArrayUtil  {
 	 * @param numberArray 数字数组
 	 * @param comparator  比较器，null表示默认比较器
 	 * @return 最大值
-	 * @since 5.3.4
 	 */
-	static <T extends Comparable<? super T>> T max(T[] numberArray, Comparator comparator) {
-		if (isEmpty(numberArray)) {
-			throw new IllegalArgumentException("Number array must not empty !");
+	static max(numberArray) {
+		if (this.isEmpty(numberArray)) {
+			throw new Error("Number array must not empty !");
 		}
-		T max = numberArray[0];
-		for (int i = 1; i < numberArray.length; i++) {
-			if (CompareUtil.compare(max, numberArray[i], comparator) < 0) {
+		let max = numberArray[0];
+		for (let i = 1; i < numberArray.length; i++) {
+			if (CompareUtil.compare(max, numberArray[i]) < 0) {
 				max = numberArray[i];
 			}
 		}
@@ -829,18 +805,7 @@ export class ArrayUtil  {
 
 	// 使用Fisher–Yates洗牌算法，以线性时间复杂度打乱数组顺序
 
-	/**
-	 * 打乱数组顺序，会变更原数组
-	 *
-	 * @param    元素类型
-	 * @param array 数组，会变更
-	 * @return 打乱后的数组
-	 * @author FengBaoheng
-	 * @since 5.5.2
-	 */
-	static  T[] shuffle(T[] array) {
-		return shuffle(array, RandomUtil.getRandom());
-	}
+
 
 	/**
 	 * 打乱数组顺序，会变更原数组
@@ -852,13 +817,15 @@ export class ArrayUtil  {
 	 * @author FengBaoheng
 	 * @since 5.5.2
 	 */
-	static  T[] shuffle(T[] array, Random random) {
-		if (array == null || random == null || array.length <= 1) {
+	static   shuffle(array) {
+		if (array == null || array.length <= 1) {
 			return array;
 		}
 
-		for (int i = array.length; i > 1; i--) {
-			swap(array, i - 1, random.nextInt(i));
+
+		for (let i = array.length; i > 1; i--) {
+			const randomInt = Math.random();
+			this.swap(array, i - 1, randomInt);
 		}
 
 		return array;
@@ -872,13 +839,12 @@ export class ArrayUtil  {
 	 * @param index1 位置1
 	 * @param index2 位置2
 	 * @return 交换后的数组，与传入数组为同一对象
-	 * @since 4.0.7
 	 */
-	static  T[] swap(T[] array, int index1, int index2) {
-		if (isEmpty(array)) {
-			throw new IllegalArgumentException("Array must not empty !");
+	static  swap( array, index1,  index2) {
+		if (this.isEmpty(array)) {
+			throw new Error("Array must not empty !");
 		}
-		T tmp = array[index1];
+		let tmp = array[index1];
 		array[index1] = array[index2];
 		array[index2] = tmp;
 		return array;
@@ -1189,86 +1155,7 @@ export class ArrayUtil  {
 
 	// O(n)时间复杂度检查数组是否有序
 
-	/**
-	 * 检查数组是否有序，即comparator.compare(array[i], array[i + 1]) &lt;= 0，若传入空数组或空比较器，则返回false
-	 *
-	 * @param array      数组
-	 * @param comparator 比较器
-	 * @param         数组元素类型
-	 * @return 数组是否有序
-	 * @author FengBaoheng
-	 * @since 5.5.2
-	 */
-	static  boolean isSorted(T[] array, Comparator<? super T> comparator) {
-		if (array == null || comparator == null) {
-			return false;
-		}
-
-		for (int i = 0; i < array.length - 1; i++) {
-			if (comparator.compare(array[i], array[i + 1]) > 0) {
-				return false;
-			}
-		}
-		return true;
-	}
-
-	/**
-	 * 检查数组是否升序，即array[i].compareTo(array[i + 1]) &lt;= 0，若传入空数组，则返回false
-	 *
-	 * @param    数组元素类型，该类型需要实现Comparable接口
-	 * @param array 数组
-	 * @return 数组是否升序
-	 * @author FengBaoheng
-	 * @since 5.5.2
-	 */
-	static <T extends Comparable<? super T>> boolean isSorted(T[] array) {
-		return isSortedASC(array);
-	}
 
 
-	/**
-	 * 检查数组是否升序，即array[i].compareTo(array[i + 1]) &lt;= 0，若传入空数组，则返回false
-	 *
-	 * @param    数组元素类型，该类型需要实现Comparable接口
-	 * @param array 数组
-	 * @return 数组是否升序
-	 * @author FengBaoheng
-	 * @since 5.5.2
-	 */
-	static <T extends Comparable<? super T>> boolean isSortedASC(T[] array) {
-		if (array == null) {
-			return false;
-		}
 
-		for (int i = 0; i < array.length - 1; i++) {
-			if (array[i].compareTo(array[i + 1]) > 0) {
-				return false;
-			}
-		}
-
-		return true;
-	}
-
-	/**
-	 * 检查数组是否降序，即array[i].compareTo(array[i + 1]) &gt;= 0，若传入空数组，则返回false
-	 *
-	 * @param    数组元素类型，该类型需要实现Comparable接口
-	 * @param array 数组
-	 * @return 数组是否降序
-	 * @author FengBaoheng
-	 * @since 5.5.2
-	 */
-	static <T extends Comparable<? super T>> boolean isSortedDESC(T[] array) {
-		if (array == null) {
-			return false;
-		}
-
-		for (int i = 0; i < array.length - 1; i++) {
-			if (array[i].compareTo(array[i + 1]) < 0) {
-				return false;
-			}
-		}
-
-		return true;
-	}
 }
