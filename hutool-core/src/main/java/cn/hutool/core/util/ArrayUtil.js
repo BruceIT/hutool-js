@@ -894,11 +894,15 @@ export class ArrayUtil  {
 	 * 是否存都为{@code null}或空对象，通过{@link ObjectUtil#isEmpty(Object)} 判断元素
 	 *
 	 * @param args 被检查的对象,一个或者多个
-	 * @return 是否都为空
-	 * @since 4.5.18
+	 * @return boolean
 	 */
 	static  isAllEmpty(args) {
-		return emptyCount(args) == args.length;
+		for(let el of args){
+			if(el != null){
+				return true
+			}
+		}
+		return false
 	}
 
 	/**
@@ -908,22 +912,16 @@ export class ArrayUtil  {
 	 * @return 是否都不为空
 	 * @since 4.5.18
 	 */
-	static boolean isAllNotEmpty(Object... args) {
-		return false == hasEmpty(args);
+	static  isAllNotEmpty(args) {
+		for(let el of args){
+			if(el == null){
+				return true
+			}
+		}
+		return false
 	}
 
-	/**
-	 * 多个字段是否全部不为null
-	 *
-	 * @param    数组元素类型
-	 * @param array 被检查的数组
-	 * @return 多个字段是否全部不为null
-	 * @since 5.4.0
-	 */
-	@SuppressWarnings("unchecked")
-	static  boolean isAllNotNull(T... array) {
-		return false == hasNull(array);
-	}
+
 
 	/**
 	 * 去重数组中的元素，去重后生成新的数组，原数组不变<br>
@@ -931,17 +929,24 @@ export class ArrayUtil  {
 	 *
 	 * @param    数组元素类型
 	 * @param array 数组
-	 * @return 去重后的数组
+	 * @return *[]
 	 */
-	@SuppressWarnings("unchecked")
-	static  T[] distinct(T[] array) {
-		if (isEmpty(array)) {
+	static  distinct(array) {
+		if (this.isEmpty(array)) {
 			return array;
 		}
 
-		final Set set = new LinkedHashSet<>(array.length, 1);
-		Collections.addAll(set, array);
-		return toArray(set, (Class) getComponentType(array));
+		const set = new Set();
+
+		for (let el of array){
+			set.add(el)
+		}
+
+		const arr = []
+		set.forEach(v=>{
+			arr.push(v)
+		})
+		return arr;
 	}
 
 	/**
