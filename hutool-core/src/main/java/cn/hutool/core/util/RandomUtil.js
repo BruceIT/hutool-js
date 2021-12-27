@@ -187,8 +187,8 @@ export default class RandomUtil {
 	 * @param length 字符串的长度
 	 * @return 随机字符串
 	 */
-	 static String randomNumbers(int length) {
-		return randomString(BASE_NUMBER, length);
+	 static randomNumbers(length) {
+		return this.randomString(this.BASE_NUMBER, length);
 	}
 
 	/**
@@ -196,33 +196,32 @@ export default class RandomUtil {
 	 *
 	 * @param baseString 随机字符选取的样本
 	 * @param length     字符串的长度
-	 * @return 随机字符串
+	 * @return string
 	 */
-	 static String randomString(String baseString, int length) {
+	 static  randomString( baseString,  length) {
 		if (StrUtil.isEmpty(baseString)) {
 			return StrUtil.EMPTY;
 		}
-		final StringBuilder sb = new StringBuilder(length);
+		const  sb = [];
 
 		if (length < 1) {
 			length = 1;
 		}
-		int baseLength = baseString.length();
-		for (int i = 0; i < length; i++) {
-			int number = randomInt(baseLength);
-			sb.append(baseString.charAt(number));
+		let baseLength = baseString.length;
+		for (let i = 0; i < length; i++) {
+			let number = this.randomInt(baseLength);
+			sb.append(baseString[number]);
 		}
-		return sb.toString();
+		return sb.join('');
 	}
 
 	/**
 	 * 随机数字，数字为0~9单个数字
 	 *
-	 * @return 随机数字字符
-	 * @since 3.1.2
+	 * @return number
 	 */
-	 static char randomNumber() {
-		return randomChar(BASE_NUMBER);
+	 static  randomNumber() {
+		return Math.floor(Math.random() * 10) ;
 	}
 
 	/**
@@ -231,8 +230,8 @@ export default class RandomUtil {
 	 * @return 随机字符
 	 * @since 3.1.2
 	 */
-	 static char randomChar() {
-		return randomChar(BASE_CHAR_NUMBER);
+	 static  randomChar() {
+		return this.randomChar(this.BASE_CHAR_NUMBER);
 	}
 
 	/**
@@ -242,46 +241,11 @@ export default class RandomUtil {
 	 * @return 随机字符
 	 * @since 3.1.2
 	 */
-	 static char randomChar(String baseString) {
-		return baseString.charAt(randomInt(baseString.length()));
+	 static  randomChar(baseString) {
+		return baseString[this.randomInt(baseString.length)];
 	}
 
-	/**
-	 * 生成随机颜色
-	 *
-	 * @return 随机颜色
-	 * @since 4.1.5
-	 * @deprecated 使用ImgUtil.randomColor()
-	 */
-	@Deprecated
-	 static Color randomColor() {
-		final Random random = getRandom();
-		return new Color(random.nextInt(256), random.nextInt(256), random.nextInt(256));
-	}
 
-	/**
-	 * 带有权重的随机生成器
-	 *
-	 * @param <T>        随机对象类型
-	 * @param weightObjs 带有权重的对象列表
-	 * @return {@link WeightRandom}
-	 * @since 4.0.3
-	 */
-	 static <T> WeightRandom<T> weightRandom(WeightObj<T>[] weightObjs) {
-		return new WeightRandom<>(weightObjs);
-	}
-
-	/**
-	 * 带有权重的随机生成器
-	 *
-	 * @param <T>        随机对象类型
-	 * @param weightObjs 带有权重的对象列表
-	 * @return {@link WeightRandom}
-	 * @since 4.0.3
-	 */
-	 static <T> WeightRandom<T> weightRandom(Iterable<WeightObj<T>> weightObjs) {
-		return new WeightRandom<>(weightObjs);
-	}
 
 	/**
 	 * 以当天为基准，随机产生一个日期
@@ -289,28 +253,14 @@ export default class RandomUtil {
 	 * @param min 偏移最小天，可以为负数表示过去的时间（包含）
 	 * @param max 偏移最大天，可以为负数表示过去的时间（不包含）
 	 * @return 随机日期（随机天，其它时间不变）
-	 * @since 4.0.8
 	 */
-	 static DateTime randomDay(int min, int max) {
-		return randomDate(DateUtil.date(), DateField.DAY_OF_YEAR, min, max);
+	 static randomDay(min, max) {
+		const i =  this.randomInt(min, max);
+		let d = new Date()
+		d = d.setDate(d.getDate() + i);
+
+		return d;
 	}
 
-	/**
-	 * 以给定日期为基准，随机产生一个日期
-	 *
-	 * @param baseDate  基准日期
-	 * @param dateField 偏移的时间字段，例如时、分、秒等
-	 * @param min       偏移最小量，可以为负数表示过去的时间（包含）
-	 * @param max       偏移最大量，可以为负数表示过去的时间（不包含）
-	 * @return 随机日期
-	 * @since 4.5.8
-	 */
-	 static DateTime randomDate(Date baseDate, DateField dateField, int min, int max) {
-		if (null == baseDate) {
-			baseDate = DateUtil.date();
-		}
-
-		return DateUtil.offset(baseDate, dateField, randomInt(min, max));
-	}
 
 }

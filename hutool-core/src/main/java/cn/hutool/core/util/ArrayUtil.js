@@ -2,6 +2,7 @@
  * 数组工具类
  */
 import CompareUtil from "../comparator/CompareUtil";
+import RandomUtil from "./RandomUtil";
 
 export class ArrayUtil  {
 
@@ -824,7 +825,7 @@ export class ArrayUtil  {
 
 
 		for (let i = array.length; i > 1; i--) {
-			const randomInt = Math.random();
+			const randomInt = RandomUtil.randomInt(0, array.length);
 			this.swap(array, i - 1, randomInt);
 		}
 
@@ -850,24 +851,7 @@ export class ArrayUtil  {
 		return array;
 	}
 
-	/**
-	 * 交换数组中两个位置的值
-	 *
-	 * @param array  数组对象
-	 * @param index1 位置1
-	 * @param index2 位置2
-	 * @return 交换后的数组，与传入数组为同一对象
-	 * @since 4.0.7
-	 */
-	static Object swap(Object array, int index1, int index2) {
-		if (isEmpty(array)) {
-			throw new IllegalArgumentException("Array must not empty !");
-		}
-		Object tmp = get(array, index1);
-		Array.set(array, index1, Array.get(array, index2));
-		Array.set(array, index2, tmp);
-		return array;
-	}
+
 
 	/**
 	 * 计算{@code null}或空元素对象的个数，通过{@link ObjectUtil#isEmpty(Object)} 判断元素
@@ -876,11 +860,11 @@ export class ArrayUtil  {
 	 * @return 存在{@code null}的数量
 	 * @since 4.5.18
 	 */
-	static int emptyCount(Object... args) {
-		int count = 0;
-		if (isNotEmpty(args)) {
-			for (Object element : args) {
-				if (ObjectUtil.isEmpty(element)) {
+	static  emptyCount(arr) {
+		let count = 0;
+		if (this.isNotEmpty(arr)) {
+			for (let element of arr) {
+				if (element == null) {
 					count++;
 				}
 			}
@@ -895,10 +879,10 @@ export class ArrayUtil  {
 	 * @return 是否存在
 	 * @since 4.5.18
 	 */
-	static boolean hasEmpty(Object... args) {
-		if (isNotEmpty(args)) {
-			for (Object element : args) {
-				if (ObjectUtil.isEmpty(element)) {
+	static  hasEmpty(args) {
+		if (this.isNotEmpty(args)) {
+			for (let element of args) {
+				if (element == null) {
 					return true;
 				}
 			}
@@ -913,7 +897,7 @@ export class ArrayUtil  {
 	 * @return 是否都为空
 	 * @since 4.5.18
 	 */
-	static boolean isAllEmpty(Object... args) {
+	static  isAllEmpty(args) {
 		return emptyCount(args) == args.length;
 	}
 
