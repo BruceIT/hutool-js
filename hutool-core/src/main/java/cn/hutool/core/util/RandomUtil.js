@@ -3,6 +3,8 @@
  *
  * @author xiaoleilu
  */
+import StrUtil from "./StrUtil";
+
 export default class RandomUtil {
 
 	/**
@@ -107,7 +109,7 @@ export default class RandomUtil {
 	 * @return 随机元素
 	 */
 	static randomEle(list) {
-		return list.get(this.randomInt());
+		return list.get(this.randomInt(list.size()));
 	}
 
 
@@ -117,76 +119,28 @@ export default class RandomUtil {
 	 * @param <T>   元素类型
 	 * @param list  列表
 	 * @param count 随机取出的个数
-	 * @return 随机元素
+	 * @return any[]
 	 */
-	public static <T> List<T> randomEles(List<T> list, int count) {
-		final List<T> result = new ArrayList<>(count);
-		int limit = list.size();
+	 static  randomEles( list,  count) {
+		const result = new Array(count);
 		while (result.size() < count) {
-			result.add(randomEle(list, limit));
+			result.add(this.randomEle(list));
 		}
 
 		return result;
 	}
 
-	/**
-	 * 随机获得列表中的一定量的元素，返回List<br>
-	 * 此方法与{@link #randomEles(List, int)} 不同点在于，不会获取重复位置的元素
-	 *
-	 * @param source 列表
-	 * @param count  随机取出的个数
-	 * @param <T>    元素类型
-	 * @return 随机列表
-	 * @since 5.2.1
-	 */
-	public static <T> List<T> randomEleList(List<T> source, int count) {
-		if (count >= source.size()) {
-			return ListUtil.toList(source);
-		}
-		final int[] randomList = ArrayUtil.sub(randomInts(source.size()), 0, count);
-		List<T> result = new ArrayList<>();
-		for (int e : randomList) {
-			result.add(source.get(e));
-		}
-		return result;
-	}
-
-	/**
-	 * 随机获得列表中的一定量的不重复元素，返回Set
-	 *
-	 * @param <T>        元素类型
-	 * @param collection 列表
-	 * @param count      随机取出的个数
-	 * @return 随机元素
-	 * @throws IllegalArgumentException 需要的长度大于给定集合非重复总数
-	 */
-	public static <T> Set<T> randomEleSet(Collection<T> collection, int count) {
-		final ArrayList<T> source = CollUtil.distinct(collection);
-		if (count > source.size()) {
-			throw new IllegalArgumentException("Count is larger than collection distinct size !");
-		}
-
-		final Set<T> result = new LinkedHashSet<>(count);
-		int limit = source.size();
-		while (result.size() < count) {
-			result.add(randomEle(source, limit));
-		}
-
-		return result;
-	}
 
 	/**
 	 * 创建指定长度的随机索引
 	 *
 	 * @param length 长度
-	 * @return 随机索引
-	 * @since 5.2.1
+	 * @return any[]
 	 */
-	public static int[] randomInts(int length) {
-		final int[] range = ArrayUtil.range(length);
-		for (int i = 0; i < length; i++) {
-			int random = randomInt(i, length);
-			ArrayUtil.swap(range, i, random);
+	static  randomInts(length) {
+		const range = new Array(length);
+		for (let i = 0; i < length; i++) {
+			range[i] = this.randomInt(i, length)
 		}
 		return range;
 	}
@@ -197,8 +151,8 @@ export default class RandomUtil {
 	 * @param length 字符串的长度
 	 * @return 随机字符串
 	 */
-	public static String randomString(int length) {
-		return randomString(BASE_CHAR_NUMBER, length);
+	static randomString(length) {
+		return this.randomString(this.BASE_CHAR_NUMBER, length);
 	}
 
 	/**
@@ -208,8 +162,8 @@ export default class RandomUtil {
 	 * @return 随机字符串
 	 * @since 4.0.13
 	 */
-	public static String randomStringUpper(int length) {
-		return randomString(BASE_CHAR_NUMBER, length).toUpperCase();
+	static  randomStringUpper( length) {
+		return this.randomString(this.BASE_CHAR_NUMBER, length).toUpperCase();
 	}
 
 	/**
@@ -219,10 +173,12 @@ export default class RandomUtil {
 	 * @param elemData 要排除的字符串,如：去重容易混淆的字符串，oO0、lL1、q9Q、pP
 	 * @return 随机字符串
 	 */
-	public static String randomStringWithoutStr(int length, String elemData) {
-		String baseStr = BASE_CHAR_NUMBER;
+	 static randomStringWithoutStr(length, elemData) {
+		let baseStr = this.BASE_CHAR_NUMBER;
+
+		// TODO 先完成StrUtil再来
 		baseStr = StrUtil.removeAll(baseStr, elemData.toCharArray());
-		return randomString(baseStr, length);
+		return this.randomString(baseStr, length);
 	}
 
 	/**
@@ -231,7 +187,7 @@ export default class RandomUtil {
 	 * @param length 字符串的长度
 	 * @return 随机字符串
 	 */
-	public static String randomNumbers(int length) {
+	 static String randomNumbers(int length) {
 		return randomString(BASE_NUMBER, length);
 	}
 
@@ -242,7 +198,7 @@ export default class RandomUtil {
 	 * @param length     字符串的长度
 	 * @return 随机字符串
 	 */
-	public static String randomString(String baseString, int length) {
+	 static String randomString(String baseString, int length) {
 		if (StrUtil.isEmpty(baseString)) {
 			return StrUtil.EMPTY;
 		}
@@ -265,7 +221,7 @@ export default class RandomUtil {
 	 * @return 随机数字字符
 	 * @since 3.1.2
 	 */
-	public static char randomNumber() {
+	 static char randomNumber() {
 		return randomChar(BASE_NUMBER);
 	}
 
@@ -275,7 +231,7 @@ export default class RandomUtil {
 	 * @return 随机字符
 	 * @since 3.1.2
 	 */
-	public static char randomChar() {
+	 static char randomChar() {
 		return randomChar(BASE_CHAR_NUMBER);
 	}
 
@@ -286,7 +242,7 @@ export default class RandomUtil {
 	 * @return 随机字符
 	 * @since 3.1.2
 	 */
-	public static char randomChar(String baseString) {
+	 static char randomChar(String baseString) {
 		return baseString.charAt(randomInt(baseString.length()));
 	}
 
@@ -298,7 +254,7 @@ export default class RandomUtil {
 	 * @deprecated 使用ImgUtil.randomColor()
 	 */
 	@Deprecated
-	public static Color randomColor() {
+	 static Color randomColor() {
 		final Random random = getRandom();
 		return new Color(random.nextInt(256), random.nextInt(256), random.nextInt(256));
 	}
@@ -311,7 +267,7 @@ export default class RandomUtil {
 	 * @return {@link WeightRandom}
 	 * @since 4.0.3
 	 */
-	public static <T> WeightRandom<T> weightRandom(WeightObj<T>[] weightObjs) {
+	 static <T> WeightRandom<T> weightRandom(WeightObj<T>[] weightObjs) {
 		return new WeightRandom<>(weightObjs);
 	}
 
@@ -323,7 +279,7 @@ export default class RandomUtil {
 	 * @return {@link WeightRandom}
 	 * @since 4.0.3
 	 */
-	public static <T> WeightRandom<T> weightRandom(Iterable<WeightObj<T>> weightObjs) {
+	 static <T> WeightRandom<T> weightRandom(Iterable<WeightObj<T>> weightObjs) {
 		return new WeightRandom<>(weightObjs);
 	}
 
@@ -335,7 +291,7 @@ export default class RandomUtil {
 	 * @return 随机日期（随机天，其它时间不变）
 	 * @since 4.0.8
 	 */
-	public static DateTime randomDay(int min, int max) {
+	 static DateTime randomDay(int min, int max) {
 		return randomDate(DateUtil.date(), DateField.DAY_OF_YEAR, min, max);
 	}
 
@@ -349,7 +305,7 @@ export default class RandomUtil {
 	 * @return 随机日期
 	 * @since 4.5.8
 	 */
-	public static DateTime randomDate(Date baseDate, DateField dateField, int min, int max) {
+	 static DateTime randomDate(Date baseDate, DateField dateField, int min, int max) {
 		if (null == baseDate) {
 			baseDate = DateUtil.date();
 		}
