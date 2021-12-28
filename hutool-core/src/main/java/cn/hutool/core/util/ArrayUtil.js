@@ -949,58 +949,7 @@ export class ArrayUtil  {
 		return arr;
 	}
 
-	/**
-	 * 按照指定规则，将一种类型的数组转换为另一种类型
-	 *
-	 * @param array               被转换的数组
-	 * @param targetComponentType 目标的元素类型
-	 * @param func                转换规则函数
-	 * @param                  原数组类型
-	 * @param <R>                 目标数组类型
-	 * @return 转换后的数组
-	 * @since 5.4.2
-	 */
-	static <T, R> R[] map(T[] array, Class<R> targetComponentType, Function<? super T, ? extends R> func) {
-		final R[] result = newArray(targetComponentType, array.length);
-		for (int i = 0; i < array.length; i++) {
-			result[i] = func.apply(array[i]);
-		}
-		return result;
-	}
 
-	/**
-	 * 按照指定规则，将一种类型的数组转换为另一种类型
-	 *
-	 * @param array               被转换的数组
-	 * @param targetComponentType 目标的元素类型
-	 * @param func                转换规则函数
-	 * @param                  原数组类型
-	 * @param <R>                 目标数组类型
-	 * @return 转换后的数组
-	 * @since 5.5.8
-	 */
-	static <T, R> R[] map(Object array, Class<R> targetComponentType, Function<? super T, ? extends R> func) {
-		final int length = length(array);
-		final R[] result = newArray(targetComponentType, length);
-		for (int i = 0; i < length; i++) {
-			result[i] = func.apply(get(array, i));
-		}
-		return result;
-	}
-
-	/**
-	 * 按照指定规则，将一种类型的数组元素提取后转换为List
-	 *
-	 * @param array 被转换的数组
-	 * @param func  转换规则函数
-	 * @param    原数组类型
-	 * @param <R>   目标数组类型
-	 * @return 转换后的数组
-	 * @since 5.5.7
-	 */
-	static <T, R> List<R> map(T[] array, Function<? super T, ? extends R> func) {
-		return Arrays.stream(array).map(func).collect(Collectors.toList());
-	}
 
 	/**
 	 * 判断两个数组是否相等，判断依据包括数组长度和每个元素都相等。
@@ -1008,39 +957,29 @@ export class ArrayUtil  {
 	 * @param array1 数组1
 	 * @param array2 数组2
 	 * @return 是否相等
-	 * @since 5.4.2
 	 */
-	static boolean equals(Object array1, Object array2) {
+	static  equals( array1,  array2) {
 		if (array1 == array2) {
 			return true;
 		}
-		if (hasNull(array1, array2)) {
+		if(array1 == null || array2 == null){
 			return false;
 		}
 
-		Assert.isTrue(isArray(array1), "First is not a Array !");
-		Assert.isTrue(isArray(array2), "Second is not a Array !");
-
-		if (array1 instanceof long[]) {
-			return Arrays.equals((long[]) array1, (long[]) array2);
-		} else if (array1 instanceof int[]) {
-			return Arrays.equals((int[]) array1, (int[]) array2);
-		} else if (array1 instanceof short[]) {
-			return Arrays.equals((short[]) array1, (short[]) array2);
-		} else if (array1 instanceof char[]) {
-			return Arrays.equals((char[]) array1, (char[]) array2);
-		} else if (array1 instanceof byte[]) {
-			return Arrays.equals((byte[]) array1, (byte[]) array2);
-		} else if (array1 instanceof double[]) {
-			return Arrays.equals((double[]) array1, (double[]) array2);
-		} else if (array1 instanceof float[]) {
-			return Arrays.equals((float[]) array1, (float[]) array2);
-		} else if (array1 instanceof boolean[]) {
-			return Arrays.equals((boolean[]) array1, (boolean[]) array2);
-		} else {
-			// Not an array of primitives
-			return Arrays.deepEquals((Object[]) array1, (Object[]) array2);
+		if(array1.length != array2.length){
+			return false
 		}
+
+		let len = array1.length
+
+		for(let i = 0; i < len; i++){
+			if(array1[i] !== array2[i]) {
+				return false
+			}
+
+		}
+
+		return true
 	}
 
 	/**
@@ -1050,24 +989,12 @@ export class ArrayUtil  {
 	 * @param subArray 子数组
 	 * @param       数组元素类型
 	 * @return 子数组的开始位置，即子数字第一个元素在数组中的位置
-	 * @since 5.4.8
 	 */
-	static  boolean isSub(T[] array, T[] subArray) {
+	static isSub(array, subArray) {
 		return indexOfSub(array, subArray) > INDEX_NOT_FOUND;
 	}
 
-	/**
-	 * 查找子数组的位置
-	 *
-	 * @param array    数组
-	 * @param subArray 子数组
-	 * @param       数组元素类型
-	 * @return 子数组的开始位置，即子数字第一个元素在数组中的位置
-	 * @since 5.4.8
-	 */
-	static  int indexOfSub(T[] array, T[] subArray) {
-		return indexOfSub(array, 0, subArray);
-	}
+
 
 	/**
 	 * 查找子数组的位置
@@ -1079,63 +1006,18 @@ export class ArrayUtil  {
 	 * @return 子数组的开始位置，即子数字第一个元素在数组中的位置
 	 * @since 5.4.8
 	 */
-	static  int indexOfSub(T[] array, int beginInclude, T[] subArray) {
-		if (isEmpty(array) || isEmpty(subArray) || subArray.length > array.length) {
-			return INDEX_NOT_FOUND;
+	static   indexOfSub(array, subArray) {
+		if (this.isEmpty(array) || this.isEmpty(subArray) || subArray.length > array.length) {
+			return -1;
 		}
-		int firstIndex = indexOf(array, subArray[0], beginInclude);
+		let firstIndex = this.indexOf(array, subArray[0], 0);
 		if (firstIndex < 0 || firstIndex + subArray.length > array.length) {
-			return INDEX_NOT_FOUND;
+			return -1;
 		}
 
-		for (int i = 0; i < subArray.length; i++) {
+		for (let i = 0; i < subArray.length; i++) {
 			if (false == ObjectUtil.equal(array[i + firstIndex], subArray[i])) {
-				return indexOfSub(array, firstIndex + 1, subArray);
-			}
-		}
-
-		return firstIndex;
-	}
-
-	/**
-	 * 查找最后一个子数组的开始位置
-	 *
-	 * @param array    数组
-	 * @param subArray 子数组
-	 * @param       数组元素类型
-	 * @return 最后一个子数组的开始位置，即子数字第一个元素在数组中的位置
-	 * @since 5.4.8
-	 */
-	static  int lastIndexOfSub(T[] array, T[] subArray) {
-		if (isEmpty(array) || isEmpty(subArray)) {
-			return INDEX_NOT_FOUND;
-		}
-		return lastIndexOfSub(array, array.length - 1, subArray);
-	}
-
-	/**
-	 * 查找最后一个子数组的开始位置
-	 *
-	 * @param array    数组
-	 * @param endInclude 查找结束的位置（包含）
-	 * @param subArray 子数组
-	 * @param       数组元素类型
-	 * @return 最后一个子数组的开始位置，即子数字第一个元素在数组中的位置
-	 * @since 5.4.8
-	 */
-	static  int lastIndexOfSub(T[] array, int endInclude, T[] subArray) {
-		if (isEmpty(array) || isEmpty(subArray) || subArray.length > array.length || endInclude < 0) {
-			return INDEX_NOT_FOUND;
-		}
-
-		int firstIndex = lastIndexOf(array, subArray[0]);
-		if (firstIndex < 0 || firstIndex + subArray.length > array.length) {
-			return INDEX_NOT_FOUND;
-		}
-
-		for (int i = 0; i < subArray.length; i++) {
-			if (false == ObjectUtil.equal(array[i + firstIndex], subArray[i])) {
-				return lastIndexOfSub(array, firstIndex - 1, subArray);
+				return this.indexOfSub(array, firstIndex + 1, subArray);
 			}
 		}
 

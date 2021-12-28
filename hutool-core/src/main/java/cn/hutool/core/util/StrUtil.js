@@ -33,7 +33,7 @@ export  default class StrUtil {
 	 * @return boolean
 	 * @see StrUtil#isBlank(CharSequence)
 	 */
-	 static /*boolean*/ isBlankIfStr(obj) {
+	static /*boolean*/ isBlankIfStr(obj) {
 		if (null == obj) {
 			return true;
 		} else if (typeof obj == 'string') {
@@ -41,6 +41,7 @@ export  default class StrUtil {
 		}
 		return false;
 	}
+
 	// ------------------------------------------------------------------------ Empty
 
 	/**
@@ -63,7 +64,7 @@ export  default class StrUtil {
 	 * @param obj 对象
 	 * @return boolean
 	 */
-	 static /*boolean*/ isEmptyIfStr(obj) {
+	static /*boolean*/ isEmptyIfStr(obj) {
 		if (null == obj) {
 			return true;
 		} else if (typeof obj == 'string') {
@@ -79,7 +80,7 @@ export  default class StrUtil {
 	 *
 	 * @param strs 字符串数组
 	 */
-	 static  trim( strs) {
+	static trim(strs) {
 		if (null == strs) {
 			return;
 		}
@@ -92,12 +93,6 @@ export  default class StrUtil {
 	}
 
 
-
-
-
-
-
-
 	/**
 	 * 反转字符串<br>
 	 * 例如：abcd =》dcba
@@ -105,14 +100,14 @@ export  default class StrUtil {
 	 * @param str 被反转的字符串
 	 * @return string
 	 */
-	 static /*String*/ reverse(str) {
-		 const arr = [];
+	static /*String*/ reverse(str) {
+		const arr = [];
 
-		 for(let i = str.length -1; i >=0; i--){
-			 arr.push(str[i])
-		 }
+		for (let i = str.length - 1; i >= 0; i--) {
+			arr.push(str[i])
+		}
 
-        return  arr.join('')
+		return arr.join('')
 	}
 
 	// ------------------------------------------------------------------------ fill
@@ -126,7 +121,7 @@ export  default class StrUtil {
 	 * @param len        填充长度
 	 * @return 填充后的字符串
 	 */
-	 static /*String*/ fillBefore(str,  filledChar,  len) {
+	static /*String*/ fillBefore(str, filledChar, len) {
 		return this.fill(str, filledChar, len, true);
 	}
 
@@ -140,7 +135,7 @@ export  default class StrUtil {
 	 * @return 填充后的字符串
 	 * @since 3.1.2
 	 */
-	 static /*String*/ fillAfter(str, filledChar, len) {
+	static /*String*/ fillAfter(str, filledChar, len) {
 		return this.fill(str, filledChar, len, false);
 	}
 
@@ -154,7 +149,7 @@ export  default class StrUtil {
 	 * @return 填充后的字符串
 	 * @since 3.1.2
 	 */
-	 static /*String*/ fill( str,  filledChar,  len, isPre) {
+	static /*String*/ fill(str, filledChar, len, isPre) {
 		const strLen = str.length;
 		if (strLen > len) {
 			return str;
@@ -171,7 +166,7 @@ export  default class StrUtil {
 	 * @param str2 字符串2
 	 * @return number
 	 */
-	 static /*double*/ similar(str1, str2) {
+	static /*double*/ similar(str1, str2) {
 		return TextSimilarity.similar(str1, str2);
 	}
 
@@ -184,7 +179,7 @@ export  default class StrUtil {
 	 * @return 百分比
 	 * @since 3.2.3
 	 */
-	 static  similar( str1,  str2, scale) {
+	static similar(str1, str2, scale) {
 		return TextSimilarity.similar(str1, str2, scale);
 	}
 
@@ -194,7 +189,7 @@ export  default class StrUtil {
 	 * @return string
 	 * @see IdUtil#randomUUID()
 	 */
-	 static  uuid() {
+	static uuid() {
 		return IdUtil.randomUUID();
 	}
 
@@ -206,7 +201,7 @@ export  default class StrUtil {
 	 * @param map      参数值对
 	 * @return 格式化后的文本
 	 */
-	 static /*String*/ format(template,  map) {
+	static /*String*/ format(template, map) {
 		return this.format(template, map, true);
 	}
 
@@ -219,7 +214,13 @@ export  default class StrUtil {
 	 * @param ignoreNull 是否忽略 {@code null} 值，忽略则 {@code null} 值对应的变量不被替换，否则替换为""
 	 * @return 格式化后的文本
 	 */
-	 static /*String*/ format(template,  map, ignoreNull) {
+	static /*String*/ format(template, map, ignoreNull) {
 		return StrFormatter.format(template, map, ignoreNull);
 	}
+
+
+	static isNotBlank(valueStr) {
+		return valueStr != null && valueStr.length != 0 && valueStr.trim().length != 0
+	}
+
 }

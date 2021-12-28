@@ -76,7 +76,7 @@ public class MutableBool implements Comparable<MutableBool>, Mutable<Boolean>, S
 
 	@Override
 	public int hashCode() {
-		return value ? Boolean.TRUE.hashCode() : Boolean.FALSE.hashCode();
+		return value ? true.hashCode() : Boolean.FALSE.hashCode();
 	}
 
 	// -----------------------------------------------------------------------
