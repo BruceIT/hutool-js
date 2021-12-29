@@ -18,26 +18,27 @@ package cn.hutool.core.util;
  * @since 5.5.8
  */
 
-public class RadixUtil {
+// TODO 还没写完
+export default class RadixUtil {
 	/**
 	 * 34进制字符串，不包含 IO 字符
 	 * 对于需要补齐的，自己可以随机填充IO字符
 	 * 26个字母：abcdefghijklmnopqrstuvwxyz
 	 */
-	public final static String RADIXS_34 = "0123456789ABCDEFGHJKLMNPQRSTUVWXYZ";
+	  static  RADIXS_34 = "0123456789ABCDEFGHJKLMNPQRSTUVWXYZ";
 	/**
 	 * 打乱后的34进制
 	 */
-	public final static String RADIXS_SHUFFLE_34 = "H3UM16TDFPSBZJ90CW28QYRE45AXKNGV7L";
+	  static  RADIXS_SHUFFLE_34 = "H3UM16TDFPSBZJ90CW28QYRE45AXKNGV7L";
 
 	/**
 	 * 59进制字符串,不包含 IOl 字符
 	 */
-	public final static String RADIXS_59 = "0123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ";
+	  static  RADIXS_59 = "0123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ";
 	/**
 	 * 打乱后的59进制
 	 */
-	public final static String RADIXS_SHUFFLE_59 = "vh9wGkfK8YmqbsoENP3764SeCX0dVzrgy1HRtpnTaLjJW2xQiZAcBMUFDu5";
+	  static  RADIXS_SHUFFLE_59 = "vh9wGkfK8YmqbsoENP3764SeCX0dVzrgy1HRtpnTaLjJW2xQiZAcBMUFDu5";
 
 	/**
 	 * 把一个整型数值转换成自己定义的进制
@@ -51,10 +52,10 @@ public class RadixUtil {
 	 * @param num    要转换的数值
 	 * @return 自定义进制字符串
 	 */
-	public static String encode(String radixs, int num) {
+	 static  encode( radixs,  num) {
 		//考虑到负数问题
-		long tmpNum = (num >= 0 ? num : (0x100000000L - (~num + 1)));
-		return encode(radixs, tmpNum, 32);
+		let tmpNum = (num >= 0 ? num : (0x100000000L - (~num + 1)));
+		return this.encode(radixs, tmpNum, 32);
 	}
 
 	/**
@@ -64,12 +65,12 @@ public class RadixUtil {
 	 * @param num    要转换的数值
 	 * @return 自定义进制字符串
 	 */
-	public static String encode(String radixs, long num) {
+	 static  encode( radixs,  num) {
 		if (num < 0) {
-			throw new RuntimeException("暂不支持负数！");
+			throw new Error("暂不支持负数！");
 		}
 
-		return encode(radixs, num, 64);
+		return this.encode(radixs, num, 64);
 	}
 
 	/**
@@ -79,9 +80,9 @@ public class RadixUtil {
 	 * @param encodeStr 需要转换成十进制的字符串
 	 * @return int
 	 */
-	public static int decodeToInt(String radixs, String encodeStr) {
+	 static  decodeToInt( radixs,  encodeStr) {
 		//还原负数
-		return (int) decode(radixs, encodeStr);
+		return  this.decode(radixs, encodeStr);
 	}
 
 	/**
@@ -91,26 +92,26 @@ public class RadixUtil {
 	 * @param encodeStr 需要转换成十进制的字符串
 	 * @return long
 	 */
-	public static long decode(String radixs, String encodeStr) {
+	 static  decode( radixs,  encodeStr) {
 		//目标是多少进制
-		int rl = radixs.length();
-		long res = 0L;
+		let rl = radixs.length;
+		let res = 0;
 
-		for (char c : encodeStr.toCharArray()) {
+		for (let c of encodeStr) {
 			res = res * rl + radixs.indexOf(c);
 		}
 		return res;
 	}
 
 	// -------------------------------------------------------------------------------- Private methods
-	private static String encode(String radixs, long num, int maxLength) {
-		if (radixs.length() < 2) {
-			throw new RuntimeException("自定义进制最少两个字符哦！");
+	 static  _encode( radixs,  num,  maxLength) {
+		if (radixs.length < 2) {
+			throw new Error("自定义进制最少两个字符哦！");
 		}
 		//目标是多少进制
-		int rl = radixs.length();
+		let rl = radixs.length;
 		//考虑到负数问题
-		long tmpNum = num;
+		 let tmpNum = num;
 		//进制的结果，二进制最小进制转换结果是32个字符
 		//StringBuilder 比较耗时
 		char[] aa = new char[maxLength];
