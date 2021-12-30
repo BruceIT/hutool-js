@@ -1,0 +1,22 @@
+{
+  "name": "hutool-js",
+  "version": "1.0.0",
+  "description": "JavaScript utils by ES6",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BruceIT/hutool-js.git"
+  },
+  "keywords": [
+    "utils"
+  ],
+  "author": "BruceIT",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BruceIT/hutool-js/issues"
+  },
+  "homepage": "https://github.com/BruceIT/hutool-js#readme"
+}
