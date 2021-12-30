@@ -26,8 +26,8 @@ jobs:
           echo "StrictHostKeyChecking no" >> ~/.ssh/config
       - name: Push Mirror
         env:
-          SOURCE_REPO: 'https://github.com/sy-records/git-deploy.git'
-          DESTINATION_REPO: 'git@gitee.com:sy-records/git-deploy.git'
+          SOURCE_REPO: 'https://gitee.com/BruceIT/hutool-js.git'
+          DESTINATION_REPO: 'https://github.com/BruceIT/hutool-js.git'
         run: |
           git clone --mirror "$SOURCE_REPO" && cd `basename "$SOURCE_REPO"`
           git remote set-url --push origin "$DESTINATION_REPO"
