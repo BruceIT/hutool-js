@@ -6,6 +6,32 @@ import RandomUtil from "./RandomUtil";
 
 export class ArrayUtil  {
 
+	static contains(arr, item){
+		return arr.indexOf(item) >= 0;
+	}
+
+
+	static removeAt(arr, index) {
+		arr.splice(index)
+	}
+
+	static remove(arr, item) {
+		arr.splice(arr.indexOf(item), 1)
+	}
+
+	static pushIfNotExist(arr, item) {
+		const index = arr.indexOf(item)
+		if(index == -1) {
+			arr.push(item)
+		}
+	}
+
+	static pushAll(arr, newArr){
+		for(let i = 0; i < newArr.length; i++){
+			arr.push(newArr[i])
+		}
+	}
+
 	// ---------------------------------------------------------------------- isEmpty
 
 	/**
