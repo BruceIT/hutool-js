@@ -21,9 +21,9 @@ jobs:
           echo "StrictHostKeyChecking no" >> ~/.ssh/config
       - name: Push Mirror
         run: |
-          git clone --mirror https://gitee.com/BruceIT/hutool-js.git 
+          git clone  https://gitee.com/BruceIT/hutool-js.git 
           cd hutool-js
-          git remote set-url --push origin https://BruceIT:$SOURCE_REPO@github.com/BruceIT/hutool-js.git
+          git remote set-url --push origin https://github.com/BruceIT/hutool-js.git
           git fetch -p origin
           git for-each-ref --format 'delete %(refname)' refs/pull | git update-ref --stdin
           git push --mirror
