@@ -19,8 +19,6 @@ jobs:
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           echo "StrictHostKeyChecking no" >> ~/.ssh/config
-          echo "$SSH_PRIVATE_KEY" > a.txt
-          cat a.txt
       - name: Push Mirror
         run: |
           ssh -T git@github.com
