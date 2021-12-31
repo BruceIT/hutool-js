@@ -1,11 +1,10 @@
-export default class Hutool {
 
-    static version(){
-        return 'hutool version 0.0.1'
-    }
+import StrUtil from "./StrUtil";
 
-}
+import ArrayUtil from "./ArrayUtil";
 
- function xx(){
-    return "xxx"
+
+export default  {
+    StrUtil,
+    ArrayUtil
 }

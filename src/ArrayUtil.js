@@ -3,7 +3,7 @@
  */
 import RandomUtil from "./RandomUtil";
 
-export class ArrayUtil  {
+export default class ArrayUtil  {
 
 	static contains(arr, item){
 		return arr.indexOf(item) >= 0;

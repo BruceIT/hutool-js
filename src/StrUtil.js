@@ -2,7 +2,6 @@
  * 字符串工具类
  *
  */
-import TextSimilarity from "../text/TextSimilarity";
 import IdUtil from "./IdUtil";
 
 export default class StrUtil {
@@ -204,29 +203,9 @@ export default class StrUtil {
         return isPre ? filledStr + str : str + filledStr;
     }
 
-    /**
-     * 计算两个字符串的相似度
-     *
-     * @param str1 字符串1
-     * @param str2 字符串2
-     * @return number
-     */
-    static /*double*/ similar(str1, str2) {
-        return TextSimilarity.similar(str1, str2);
-    }
 
-    /**
-     * 计算两个字符串的相似度百分比
-     *
-     * @param str1  字符串1
-     * @param str2  字符串2
-     * @param scale 相似度
-     * @return 百分比
-     * @since 3.2.3
-     */
-    static similar(str1, str2, scale) {
-        return TextSimilarity.similar(str1, str2, scale);
-    }
+
+
 
     /**
      * 生成随机UUID

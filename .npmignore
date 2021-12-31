@@ -8,3 +8,5 @@ out
 gen
 
 .github
+/webpack.config.js
+/src/
