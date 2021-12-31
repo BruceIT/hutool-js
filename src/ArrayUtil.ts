@@ -349,7 +349,7 @@ export default class ArrayUtil  {
 
 		for (let i = 0; i < size; i++) {
 			let key:string = keys[i];
-			map[key] = values[i];
+			map.set(key, values[i])
 		}
 
 		return map;
