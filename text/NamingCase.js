@@ -2,8 +2,8 @@
  * 命名规则封装，主要是针对驼峰风格命名、连接符命名等的封装
  *
  */
-import CharUtil from "../util/CharUtil";
-import StrUtil from "../util/StrUtil";
+import CharUtil from "../CharUtil";
+import StrUtil from "../StrUtil";
 
 export default class NamingCase {
 

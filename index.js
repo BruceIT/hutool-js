@@ -1,12 +1,7 @@
-
-
-
-
 export default class Hutool {
 
     static version(){
-        return 'hutool version 1.1'
+        return 'hutool version 0.0.1'
     }
-
 
 }

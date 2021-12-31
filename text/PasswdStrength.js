@@ -6,7 +6,7 @@
  * @since 5.7.3
  */
 
-import StrUtil from "../util/StrUtil";
+import StrUtil from "../StrUtil";
 
 /**
  * 密码等级枚举
