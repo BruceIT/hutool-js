@@ -6,7 +6,7 @@ import IdUtil from "./IdUtil";
 
 export default class StrUtil  {
 
-    static isAllUpperCase(str){
+    static isAllUpperCase(str: string){
         if(str) {
             return str == str.toUpperCase();
         }
@@ -20,7 +20,7 @@ export default class StrUtil  {
      * @param {*} str
      * @param {*} maxLength
      */
-    static cutByFullLength (str = '', maxLength) {
+    static cutByFullLength (str = '', maxLength: number) {
         let showLength = 0
         return str.split('').reduce((pre, cur) => {
             const charCode = cur.charCodeAt(0)
@@ -77,7 +77,7 @@ export default class StrUtil  {
      * @return boolean
      * @see StrUtil#isBlank(CharSequence)
      */
-    static /*boolean*/ isBlankIfStr(obj) {
+    static /*boolean*/ isBlankIfStr(obj: string) {
         if (null == obj) {
             return true;
         } else if (typeof obj == 'string') {
@@ -108,7 +108,7 @@ export default class StrUtil  {
      * @param obj 对象
      * @return boolean
      */
-    static /*boolean*/ isEmptyIfStr(obj) {
+    static /*boolean*/ isEmptyIfStr(obj: string) {
         if (null == obj) {
             return true;
         } else if (typeof obj == 'string') {
@@ -124,7 +124,7 @@ export default class StrUtil  {
      *
      * @param strs 字符串数组
      */
-    static trim(strs) {
+    static trim(strs: string[]) {
         if (null == strs) {
             return;
         }
@@ -144,7 +144,7 @@ export default class StrUtil  {
      * @param str 被反转的字符串
      * @return string
      */
-    static /*String*/ reverse(str) {
+    static /*String*/ reverse(str:string) {
         const arr = [];
 
         for (let i = str.length - 1; i >= 0; i--) {
@@ -165,7 +165,7 @@ export default class StrUtil  {
      * @param len        填充长度
      * @return 填充后的字符串
      */
-    static /*String*/ fillBefore(str, filledChar, len) {
+    static /*String*/ fillBefore(str:string, filledChar:string, len:number) {
         return this.fill(str, filledChar, len, true);
     }
 
@@ -179,7 +179,7 @@ export default class StrUtil  {
      * @return 填充后的字符串
      * @since 3.1.2
      */
-    static /*String*/ fillAfter(str, filledChar, len) {
+    static /*String*/ fillAfter(str: string, filledChar: string, len: number) {
         return this.fill(str, filledChar, len, false);
     }
 
@@ -193,7 +193,7 @@ export default class StrUtil  {
      * @return 填充后的字符串
      * @since 3.1.2
      */
-    static /*String*/ fill(str, filledChar, len, isPre) {
+    static /*String*/ fill(str:string, filledChar:string, len:number, isPre:boolean):string {
         const strLen = str.length;
         if (strLen > len) {
             return str;
@@ -205,70 +205,45 @@ export default class StrUtil  {
 
 
 
-
-
     /**
      * 生成随机UUID
      *
      * @return string
      * @see IdUtil#randomUUID()
      */
-    static uuid() {
+    static uuid():string {
         return IdUtil.randomUUID();
     }
 
-    /**
-     * 格式化文本，使用 {varName} 占位<br>
-     * map = {a: "aValue", b: "bValue"} format("{a} and {b}", map) ---=》 aValue and bValue
-     *
-     * @param template 文本模板，被替换的部分用 {key} 表示
-     * @param map      参数值对
-     * @return 格式化后的文本
-     */
-    static /*String*/ format(template, map) {
-        return this.format(template, map, true);
-    }
-
-    /**
-     * 格式化文本，使用 {varName} 占位<br>
-     * map = {a: "aValue", b: "bValue"} format("{a} and {b}", map) ---=》 aValue and bValue
-     *
-     * @param template   文本模板，被替换的部分用 {key} 表示
-     * @param map        参数值对
-     * @param ignoreNull 是否忽略 {@code null} 值，忽略则 {@code null} 值对应的变量不被替换，否则替换为""
-     * @return 格式化后的文本
-     */
-    static /*String*/ format(template, map, ignoreNull) {
-        return StrFormatter.format(template, map, ignoreNull);
-    }
 
 
-    static isBlank(str) {
+
+    static isBlank(str: string):boolean {
         return str == null || str.length == 0 || str.trim().length == 0;
     }
 
-    static isNotBlank(str) {
+    static isNotBlank(str:string):boolean {
         return str != null && str.length != 0 && str.trim().length != 0
     }
 
-    static isUpperCase(c) {
+    static isUpperCase(c: string) {
         return 'ABCDEFGHIJKLMNOPORSTUVWXYZ'.indexOf(c) >= 0;
     }
 
-    static isLowerCase(c) {
+    static isLowerCase(c: string) {
         return 'abcdefghijklmnoporstuvwxyz'.indexOf(c) >= 0;
     }
 
-    static upperFirst(str) {
-        return str[0].toUpperCase() + str.substr(1)
+    static upperFirst(str: string) {
+        return str[0].toUpperCase() + str.substring(1)
     }
 
-    static contains(str, symbol) {
+    static contains(str: string , symbol: string) {
         return str.indexOf(symbol) >= 0;
     }
 
     // 检查 aaa， bbb 这种
-    static isCharEquals(str) {
+    static isCharEquals(str: string ) {
         const first = str[0];
         for (let i = 0; i < str.length; i++) {
             if (first !== str[i]) {
@@ -278,8 +253,8 @@ export default class StrUtil  {
         return true
     }
 
-    static isNumeric(str) {
-        return Number.isNaN(str - 0)
+    static isNumeric(str: string) {
+        return Number.isNaN(parseInt(str))
     }
 
 
@@ -290,7 +265,7 @@ export default class StrUtil  {
      * @param end 不包含
      * @returns {string}
      */
-    static hide(str, start, end) {
+    static hide(str: string , start: number, end: number) {
         const buffer = []
         for (let i = 0; i < str.length; i++) {
             let ch = str[i];
@@ -303,11 +278,11 @@ export default class StrUtil  {
         return buffer.join('');
     }
 
-    static indexOf(str, ch) {
+    static indexOf(str: string , ch: string) {
         return str.indexOf(ch);
     }
 
-    static repeat(ch, len) {
+    static repeat(ch: string, len: number) {
         const sb = []
         for(let i = 0; i <len; i++){
             sb.push(ch)

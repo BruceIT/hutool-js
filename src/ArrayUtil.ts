@@ -5,27 +5,23 @@ import RandomUtil from "./RandomUtil";
 
 export default class ArrayUtil  {
 
-	static contains(arr, item){
-		return arr.indexOf(item) >= 0;
-	}
 
 
-	static removeAt(arr, index) {
+
+	static removeAt(arr: any[], index: number) {
 		arr.splice(index)
 	}
 
-	static remove(arr, item) {
-		arr.splice(arr.indexOf(item), 1)
-	}
 
-	static pushIfNotExist(arr, item) {
+
+	static pushIfNotExist(arr: any[], item: number) {
 		const index = arr.indexOf(item)
 		if(index == -1) {
 			arr.push(item)
 		}
 	}
 
-	static pushAll(arr, newArr){
+	static pushAll(arr: any[], newArr:  any[]){
 		for(let i = 0; i < newArr.length; i++){
 			arr.push(newArr[i])
 		}
@@ -39,7 +35,7 @@ export default class ArrayUtil  {
 	 * @param array 数组
 	 * @return boolean
 	 */
-	static isEmpty(array) {
+	static isEmpty(array: any[]) {
 		return array == null || array.length == 0;
 	}
 
@@ -49,7 +45,7 @@ export default class ArrayUtil  {
 	 * @param defaultArray 默认数组
 	 * @return 非空（empty）的原数组或默认数组
 	 */
-	static  defaultIfEmpty(array, defaultArray) {
+	static  defaultIfEmpty(array: any[], defaultArray: any[]) {
 		return this.isEmpty(array) ? defaultArray : array;
 	}
 
@@ -63,7 +59,7 @@ export default class ArrayUtil  {
 	 * @param array 数组
 	 * @return boolean
 	 */
-	static isNotEmpty(array) {
+	static isNotEmpty(array:  any[]) {
 		return null != array && array.length !== 0;
 	}
 
@@ -75,7 +71,7 @@ export default class ArrayUtil  {
 	 * @param array 被检查的数组
 	 * @return 是否包含{@code null}元素
 	 */
-	static hasNull(array) {
+	static hasNull(array: any[]) {
 		if (this.isNotEmpty(array)) {
 			for (let element of array) {
 				if (element == null) {
@@ -93,7 +89,7 @@ export default class ArrayUtil  {
 	 * @param array 被检查的数组
 	 * @return boolean
 	 */
-	static   isAllNull(array) {
+	static   isAllNull(array: any[]) {
 		for(let element of array){
 			if(element !== null){
 				return  false
@@ -108,7 +104,7 @@ export default class ArrayUtil  {
 	 * @param array 数组
 	 * @return 非空元素，如果不存在非空元素或数组为空，返回{@code null}
 	 */
-	static firstNonNull(array) {
+	static firstNonNull(array:any[]) {
 		for ( let el of array){
 			if (el === null){
 				return  el
@@ -125,7 +121,7 @@ export default class ArrayUtil  {
 	 * @param array   数组
 	 * @return 匹配元素，如果不存在匹配元素或数组为空，返回 {@code null}
 	 */
-	static firstMatch(regex, array) {
+	static firstMatch(regex: string, array: any) {
 		for(let el of array){
 			if (typeof(el) === 'string' && el.match(regex)){
 				return  el
@@ -141,7 +137,7 @@ export default class ArrayUtil  {
 	 * @param array   数组
 	 * @return 匹配到元素的位置，-1表示未匹配到
 	 */
-	static  matchIndex(regex, array) {
+	static  matchIndex(regex:string, array:any[]) {
 		for(let i = 0, len = array.length; i < len; i++){
 			const el = array[i]
 			if (typeof(el) === 'string' && el.match(regex)){
@@ -149,31 +145,9 @@ export default class ArrayUtil  {
 			}
 		}
 		return -1
-
-
 	}
 
-	/**
-	 * 返回数组中第一个匹配规则的值的位置
-	 *
-	 * @param matcher           匹配接口，实现此接口自定义匹配规则
-	 * @param beginIndexInclude 检索开始的位置
-	 * @param array             数组
-	 * @return 匹配到元素的位置，-1表示未匹配到
-	 */
-	static  matchIndex(regex, beginIndexInclude, array) {
-        let len  = array.length
-        if (beginIndexInclude > len){
-            return  -1;
-        }
 
-        for(let i = beginIndexInclude; i <len; i++){
-            const el = array[i]
-            if (typeof(el) === 'string' && el.match(regex)){
-                return  i;
-            }
-        }
-	}
 
 	/**
 	 * 新建一个空数组
@@ -182,7 +156,7 @@ export default class ArrayUtil  {
 	 * @param newSize       大小
 	 * @return any[]
 	 */
-	static  newArray(newSize) {
+	static  newArray(newSize: number) {
 		return new Array(newSize)
 	}
 
@@ -195,7 +169,7 @@ export default class ArrayUtil  {
 	 * @param newElements 新元素
 	 * @return 新数组
 	 */
-	static append(buffer, ...newElements) {
+	static append(buffer: any[], ...newElements: any[]) {
 		if (this.isEmpty(buffer)) {
 			return newElements;
 		}
@@ -214,7 +188,7 @@ export default class ArrayUtil  {
 	 * @param index  位置，大于长度追加，否则替换
 	 * @param value  新值
 	 */
-	static  setOrAppend(buffer, index,value) {
+	static  setOrAppend(buffer:  any[], index: number, value: any) {
 		if (index < buffer.length) {
             buffer[index] = value
 			return buffer;
@@ -235,7 +209,7 @@ export default class ArrayUtil  {
 	 * @param newElements 新元素
 	 * @return 新数组
 	 */
-	static insert(buffer, index, newElements) {
+	static insert(buffer: any[], index: any, newElements: any) {
         buffer.splice(index, 0, newElements)
 		return  buffer
 	}
@@ -251,7 +225,7 @@ export default class ArrayUtil  {
 	 * @param componentType 数组元素类型
 	 * @return any[]
 	 */
-	static   resize(data, newSize) {
+	static   resize(data: any[], newSize: number) {
 		if (newSize < 0) {
 			return data;
 		}
@@ -276,61 +250,21 @@ export default class ArrayUtil  {
 	 * @param arrays 数组集合
 	 * @return *[]
 	 */
-	static  addAll(...arrays) {
+	static  addAll(...arrays: any[]):any[] {
 		if (arrays.length == 1) {
 			return arrays[0];
 		}
 
-        let result = []
+        const result: any[] = []
         for(let array of arrays){
             result.concat(array)
         }
         return  result;
 	}
 
-	/**
-	 * 数组复制
-	 *
-	 * @param src     源数组
-	 * @param srcPos  源数组开始位置
-	 * @param dest    目标数组
-	 * @param destPos 目标数组开始位置
-	 * @param length  拷贝数组长度
-	 * @return 目标数组
-	 */
-	static copy(src, srcPos, dest, destPos, length) {
-        for(let i = srcPos; i < length; i++){
-            dest[destPos + i] = srcPos[i]
-        }
-        return  dest
-    }
 
-	/**
-	 * 包装 {@link System#arraycopy(Object, int, Object, int, int)}<br>
-	 * 数组复制，缘数组和目标数组都是从位置0开始复制
-	 *
-	 * @param src    源数组
-	 * @param dest   目标数组
-	 * @param length 拷贝数组长度
-	 * @return 目标数组
-	 */
-	static  copy( src,  dest,  length) {
-        for(let i = 0;i < length; i++){
-            dest[i] = src[i]
-        }
-        return  dest
-	}
 
-	/**
-	 * 克隆数组
-	 *
-	 * @param    数组元素类型
-	 * @param array 被克隆的数组
-	 * @return 新数组
-	 */
-	static  clone(array) {
-        return  array.splice() // make a copy
-	}
+
 
 
 
@@ -339,7 +273,7 @@ export default class ArrayUtil  {
 	/**
 	 * 过滤<
 	 */
-	static   filter(array, filter) {
+	static   filter(array: any[], filter: any) {
 		if (null == array || null == filter) {
 			return array;
 		}
@@ -354,7 +288,7 @@ export default class ArrayUtil  {
 	 * @param array 数组
 	 * @return 处理后的数组
 	 */
-	static  removeNull(array) {
+	static  removeNull(array: any[]) {
         return array.filter(a=>a!=null);
 	}
 
@@ -365,7 +299,7 @@ export default class ArrayUtil  {
 	 * @param array 数组
 	 * @return 处理后的数组
 	 */
-	static removeEmpty(array) {
+	static removeEmpty(array: any[]) {
         return array.filter(a=>a != null && a != '')
 	}
 
@@ -376,7 +310,7 @@ export default class ArrayUtil  {
 	 * @param array 数组
 	 * @return 处理后的数组
 	 */
-	static  removeBlank(array) {
+	static  removeBlank(array: any[]) {
 		return array.filter(a=>a!= null && a.trim() != '')
 	}
 
@@ -386,7 +320,7 @@ export default class ArrayUtil  {
 	 * @param array 数组
 	 * @return 新数组
 	 */
-	static nullToEmpty(array) {
+	static nullToEmpty(array: any[]) {
         return array.map(a => a == null ? '' : a)
     }
 
@@ -405,16 +339,17 @@ export default class ArrayUtil  {
 	 * @param isOrder 是否有序
 	 * @return Map
 	 */
-	static  zip(keys, values) {
+	static  zip(keys:  string[], values: any[]) {
 		if (this.isEmpty(keys) || this.isEmpty(values)) {
 			return null;
 		}
 
 	    const size = Math.min(keys.length, values.length);
-		const map = new Map();
+		const map= new Map();
 
 		for (let i = 0; i < size; i++) {
-			map.put(keys[i], values[i]);
+			let key:string = keys[i];
+			map[key] = values[i];
 		}
 
 		return map;
@@ -423,23 +358,7 @@ export default class ArrayUtil  {
 
 	// ------------------------------------------------------------------- indexOf and lastIndexOf and contains
 
-	/**
-	 * 返回数组中指定元素所在位置，未找到返回{@link #INDEX_NOT_FOUND}
-	 *
-	 * @param                数组类型
-	 * @param array             数组
-	 * @param value             被检查的元素
-	 * @param beginIndexInclude 检索开始的位置
-	 * @return 数组中指定元素所在位置，未找到返回{@link #INDEX_NOT_FOUND}
-	 */
-	static  indexOf(array, value, beginIndexInclude) {
-        for(let i = beginIndexInclude ; i < array.length; i++){
-            if(array[i] == value){
-                return  i;
-            }
-        }
-        return -1;
-	}
+
 
 	/**
 	 * 返回数组中指定元素所在位置，未找到返回{@link #INDEX_NOT_FOUND}
@@ -449,8 +368,8 @@ export default class ArrayUtil  {
 	 * @param value 被检查的元素
 	 * @return 数组中指定元素所在位置，未找到返回{@link #INDEX_NOT_FOUND}
 	 */
-	static indexOf(array, value) {
-        for(let i = beginIndexInclude ; i < array.length; i++){
+	static indexOf(array: string | any[], value: any) {
+        for(let i = 0 ; i < array.length; i++){
             if(array[i] == value){
                 return  i;
             }
@@ -465,7 +384,7 @@ export default class ArrayUtil  {
 	 * @param value 被检查的元素
 	 * @return 数组中指定元素所在位置，未找到返回{@link #INDEX_NOT_FOUND}
 	 */
-	static indexOfIgnoreCase(array, value) {
+	static indexOfIgnoreCase(array: any[], value: string) {
 			for (let i = 0; i < array.length; i++) {
                 const el = array[i];
 				if (el == value) {
@@ -480,16 +399,7 @@ export default class ArrayUtil  {
             return -1;
 	}
 
-	/**
-	 * 返回数组中指定元素所在最后的位置，未找到返回{@link #INDEX_NOT_FOUND}
-	 *
-	 * @param array 数组
-	 * @param value 被检查的元素
-	 * @return 数组中指定元素所在位置，未找到返回{@link #INDEX_NOT_FOUND}
-	 */
-	static lastIndexOf(array, value) {
-        return array.lastIndexOf(value)
-    }
+
 
 	/**
 	 * 返回数组中指定元素所在最后的位置，未找到返回{@link #INDEX_NOT_FOUND}
@@ -499,9 +409,9 @@ export default class ArrayUtil  {
 	 * @param endInclude 查找方式为从后向前查找，查找的数组结束位置，一般为array.length-1
 	 * @return 数组中指定元素所在位置，未找到返回{@link #INDEX_NOT_FOUND}
 	 */
-	static lastIndexOf( array, value, endInclude) {
+	static lastIndexOf( array: any[], value: any) {
 		if (this.isNotEmpty(array)) {
-			for (let i = endInclude; i >= 0; i--) {
+			for (let i = array.length; i >= 0; i--) {
 				if (value === array[i]) {
 					return i;
 				}
@@ -518,7 +428,7 @@ export default class ArrayUtil  {
 	 * @param value 被检查的元素
 	 * @return boolean
 	 */
-	static  contains(array, value) {
+	static  contains(array:  any[], value: any) {
 		return array.indexOf(value) !== -1;
 	}
 
@@ -530,7 +440,7 @@ export default class ArrayUtil  {
 	 * @param values 被检查的多个元素
 	 * @return boolean
 	 */
-	static  containsAny(array, ...values) {
+	static  containsAny(array: any[], ...values: any[]) {
 		for (let value of values) {
 			if (this.contains(array, value)) {
 				return true;
@@ -547,7 +457,7 @@ export default class ArrayUtil  {
 	 * @param values 被检查的多个元素
 	 * @return boolean
 	 */
-	static  containsAll(array, ... values) {
+	static  containsAll(array: any[], ...values: any[]) {
 		for (let value of values) {
 			if (false == this.contains(array, value)) {
 				return false;
@@ -563,7 +473,7 @@ export default class ArrayUtil  {
 	 * @param value 被检查的元素
 	 * @return boolean
 	 */
-	static containsIgnoreCase(array, value) {
+	static containsIgnoreCase(array: any[], value: any) {
 		return this.indexOfIgnoreCase(array, value) > -1;
 	}
 
@@ -571,15 +481,7 @@ export default class ArrayUtil  {
 
 
 
-	/**
-	 * 对象是否为数组对象
-	 *
-	 * @param obj 对象
-	 * @return 是否为数组对象，如果为{@code null} 返回false
-	 */
-	static  isArray(obj) {
-		return Array.isArray(obj)
-	}
+
 
 	/**
 	 * 获取数组对象中指定index的值，支持负数，例如-1表示倒数第一个值<br>
@@ -590,7 +492,7 @@ export default class ArrayUtil  {
 	 * @param index 下标，支持负数
 	 * @return 值
 	 */
-	static   get(array, index) {
+	static   get(array:  any[], index: number) {
 		if (null == array) {
 			return null;
 		}
@@ -610,7 +512,7 @@ export default class ArrayUtil  {
 	 * @param indexes 下标列表
 	 * @return any[]
 	 */
-	static getAny(array, ... indexes) {
+	static getAny(array: any, ...indexes: any[]) {
 		if (null == array) {
 			return null;
 		}
@@ -631,7 +533,7 @@ export default class ArrayUtil  {
 	 * @param end   结束位置（不包括）
 	 * @return *[]
 	 */
-	static sub(array, start, end) {
+	static sub(array:  any[], start: number, end: number) {
 		let length = array.length
 		if (start < 0) {
 			start += length;
@@ -674,41 +576,11 @@ export default class ArrayUtil  {
 	 * @param conjunction 分隔符
 	 * @return 连接后的字符串
 	 */
-	static join(array,  conjunction) {
+	static join(array: any[], conjunction: string) {
 		return array.join(conjunction)
 	}
 
-	/**
-	 * 以 conjunction 为分隔符将数组转换为字符串
-	 *
-	 * @param        被处理的集合
-	 * @param array     数组
-	 * @param delimiter 分隔符
-	 * @param prefix    每个元素添加的前缀，null表示不添加
-	 * @param suffix    每个元素添加的后缀，null表示不添加
-	 * @return string|null
-	 */
-	static   join(array, delimiter, prefix, suffix) {
-		if (null == array) {
-			return null;
-		}
 
-		const result = [];
-
-		for(let len = array.length, i = 0; i <len; i++){
-			let v = array[i]
-			if(prefix != null){
-				v = prefix + "" + v;
-			}
-			if(suffix != null){
-				v = v + suffix;
-			}
-
-			result.push(v)
-		}
-
-		return result.join(delimiter)
-	}
 
 
 
@@ -723,7 +595,7 @@ export default class ArrayUtil  {
 	 * @param index 位置，如果位置小于0或者大于长度，返回原数组
 	 * @return 去掉指定元素后的新数组或原数组
 	 */
-	static   remove(array,  index) {
+	static   remove(array: any[], index: number) {
 		 array.splice(index, 1)
 		return  array
 	}
@@ -740,48 +612,15 @@ export default class ArrayUtil  {
 	 * @return 去掉指定元素后的新数组或原数组
 	 * @throws IllegalArgumentException 参数对象不为数组对象
 	 */
-	static   removeEle(array, element) {
+	static   removeEle(array: any[], element: any) {
 		return this.remove(array, this.indexOf(array, element));
 	}
 
 	// ---------------------------------------------------------------------- Reverse array
 
-	/**
-	 * 反转数组，会变更原数组
-	 *
-	 * @param                  数组元素类型
-	 * @param array               数组，会变更
-	 * @param startIndexInclusive 开始位置（包含）
-	 * @param endIndexExclusive   结束位置（不包含）
-	 * @return 变更后的原数组
-	 */
-	static  reverse(array, startIndexInclusive,  endIndexExclusive) {
-		if (this.isEmpty(array)) {
-			return array;
-		}
-		let i = Math.max(startIndexInclusive, 0);
-		let j = Math.min(array.length, endIndexExclusive) - 1;
-		let tmp;
-		while (j > i) {
-			tmp = array[j];
-			array[j] = array[i];
-			array[i] = tmp;
-			j--;
-			i++;
-		}
-		return array;
-	}
 
-	/**
-	 * 反转数组，会变更原数组
-	 *
-	 * @param    数组元素类型
-	 * @param array 数组，会变更
-	 * @return 变更后的原数组
-	 */
-	static  reverse(array) {
-		return this.reverse(array, 0, array.length);
-	}
+
+
 
 	// ------------------------------------------------------------------------------------------------------------ min and max
 
@@ -793,7 +632,7 @@ export default class ArrayUtil  {
 	 * @param numberArray 数字数组
 	 * @return 最小值
 	 */
-	static  min(numberArray) {
+	static  min(numberArray: any[]) {
 		if (this.isEmpty(numberArray)) {
 			throw new Error("Number array must not empty !");
 		}
@@ -816,7 +655,7 @@ export default class ArrayUtil  {
 	 * @param comparator  比较器，null表示默认比较器
 	 * @return 最大值
 	 */
-	static max(numberArray) {
+	static max(numberArray: any[]) {
 		if (this.isEmpty(numberArray)) {
 			throw new Error("Number array must not empty !");
 		}
@@ -843,7 +682,7 @@ export default class ArrayUtil  {
 	 * @author FengBaoheng
 	 * @since 5.5.2
 	 */
-	static   shuffle(array) {
+	static   shuffle(array: any[]) {
 		if (array == null || array.length <= 1) {
 			return array;
 		}
@@ -866,7 +705,7 @@ export default class ArrayUtil  {
 	 * @param index2 位置2
 	 * @return 交换后的数组，与传入数组为同一对象
 	 */
-	static  swap( array, index1,  index2) {
+	static  swap( array: any[], index1: number, index2: number) {
 		if (this.isEmpty(array)) {
 			throw new Error("Array must not empty !");
 		}
@@ -885,7 +724,7 @@ export default class ArrayUtil  {
 	 * @return 存在{@code null}的数量
 	 * @since 4.5.18
 	 */
-	static  emptyCount(arr) {
+	static  emptyCount(arr: any[]) {
 		let count = 0;
 		if (this.isNotEmpty(arr)) {
 			for (let element of arr) {
@@ -904,7 +743,7 @@ export default class ArrayUtil  {
 	 * @return 是否存在
 	 * @since 4.5.18
 	 */
-	static  hasEmpty(args) {
+	static  hasEmpty(args: any[]) {
 		if (this.isNotEmpty(args)) {
 			for (let element of args) {
 				if (element == null) {
@@ -921,7 +760,7 @@ export default class ArrayUtil  {
 	 * @param args 被检查的对象,一个或者多个
 	 * @return boolean
 	 */
-	static  isAllEmpty(args) {
+	static  isAllEmpty(args: any[]) {
 		for(let el of args){
 			if(el != null){
 				return true
@@ -937,7 +776,7 @@ export default class ArrayUtil  {
 	 * @return 是否都不为空
 	 * @since 4.5.18
 	 */
-	static  isAllNotEmpty(args) {
+	static  isAllNotEmpty(args: any[]) {
 		for(let el of args){
 			if(el == null){
 				return true
@@ -956,7 +795,7 @@ export default class ArrayUtil  {
 	 * @param array 数组
 	 * @return *[]
 	 */
-	static  distinct(array) {
+	static  distinct(array: any[]):any[] {
 		if (this.isEmpty(array)) {
 			return array;
 		}
@@ -967,7 +806,7 @@ export default class ArrayUtil  {
 			set.add(el)
 		}
 
-		const arr = []
+		const arr: any[] = []
 		set.forEach(v=>{
 			arr.push(v)
 		})
@@ -983,7 +822,7 @@ export default class ArrayUtil  {
 	 * @param array2 数组2
 	 * @return 是否相等
 	 */
-	static  equals( array1,  array2) {
+	static  equals( array1:any[], array2:  any[]) {
 		if (array1 == array2) {
 			return true;
 		}
@@ -1007,49 +846,6 @@ export default class ArrayUtil  {
 		return true
 	}
 
-	/**
-	 * 查找子数组的位置
-	 *
-	 * @param array    数组
-	 * @param subArray 子数组
-	 * @param       数组元素类型
-	 * @return 子数组的开始位置，即子数字第一个元素在数组中的位置
-	 */
-	static isSub(array, subArray) {
-		return indexOfSub(array, subArray) > INDEX_NOT_FOUND;
-	}
-
-
-
-	/**
-	 * 查找子数组的位置
-	 *
-	 * @param array        数组
-	 * @param beginInclude 查找开始的位置（包含）
-	 * @param subArray     子数组
-	 * @param           数组元素类型
-	 * @return 子数组的开始位置，即子数字第一个元素在数组中的位置
-	 * @since 5.4.8
-	 */
-	static   indexOfSub(array, subArray) {
-		if (this.isEmpty(array) || this.isEmpty(subArray) || subArray.length > array.length) {
-			return -1;
-		}
-		let firstIndex = this.indexOf(array, subArray[0], 0);
-		if (firstIndex < 0 || firstIndex + subArray.length > array.length) {
-			return -1;
-		}
-
-		for (let i = 0; i < subArray.length; i++) {
-			if (false == ObjectUtil.equal(array[i + firstIndex], subArray[i])) {
-				return this.indexOfSub(array, firstIndex + 1, subArray);
-			}
-		}
-
-		return firstIndex;
-	}
-
-	// O(n)时间复杂度检查数组是否有序
 
 
 
