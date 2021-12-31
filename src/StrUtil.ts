@@ -289,4 +289,12 @@ export default class StrUtil  {
         }
         return sb.join()
     }
+
+    static removeAll(str: string, str2: string) {
+        return str.replace(str2, '');
+    }
+
+    static isEmpty(str: string) {
+        return str == null || str === '' || str.trim() == '';
+    }
 }
