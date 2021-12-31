@@ -1,10 +1,9 @@
 {
-  "name": "hutool",
-  "version": "0.0.1",
+  "name": "hutool-core",
+  "version": "0.0.5npx webpack",
   "description": "JavaScript utils by ES6",
-  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": " webpack"
   },
   "repository": {
     "type": "git",
@@ -18,5 +17,9 @@
   "bugs": {
     "url": "https://github.com/BruceIT/hutool-js/issues"
   },
-  "homepage": "https://github.com/BruceIT/hutool-js#readme"
+  "homepage": "https://github.com/BruceIT/hutool-js#readme",
+  "devDependencies": {
+    "webpack": "^5.65.0",
+    "webpack-cli": "^4.9.1"
+  }
 }

@@ -1,7 +1,6 @@
 /**
  * 数组工具类
  */
-import CompareUtil from "../comparator/CompareUtil";
 import RandomUtil from "./RandomUtil";
 
 export class ArrayUtil  {
@@ -800,7 +799,7 @@ export class ArrayUtil  {
 		}
 		let min = numberArray[0];
 		for (let t of numberArray) {
-			if (CompareUtil.compare(min, t) > 0) {
+			if (min > t) {
 				min = t;
 			}
 		}
@@ -823,7 +822,7 @@ export class ArrayUtil  {
 		}
 		let max = numberArray[0];
 		for (let i = 1; i < numberArray.length; i++) {
-			if (CompareUtil.compare(max, numberArray[i]) < 0) {
+			if (max < numberArray[i]) {
 				max = numberArray[i];
 			}
 		}

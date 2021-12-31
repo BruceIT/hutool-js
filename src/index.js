@@ -5,3 +5,7 @@ export default class Hutool {
     }
 
 }
+
+ function xx(){
+    return "xxx"
+}

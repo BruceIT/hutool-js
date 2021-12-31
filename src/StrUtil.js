@@ -1,12 +1,56 @@
 /**
  * 字符串工具类
  *
- * @author xiaoleilu
  */
 import TextSimilarity from "../text/TextSimilarity";
 import IdUtil from "./IdUtil";
 
 export default class StrUtil {
+
+    static isAllUpperCase(str){
+        if(str) {
+            return str == str.toUpperCase();
+        }
+
+        return false
+    }
+
+
+    /**
+     * 截取字符串，根据 maxLength 截取后返回
+     * @param {*} str
+     * @param {*} maxLength
+     */
+    static cutByFullLength (str = '', maxLength) {
+        let showLength = 0
+        return str.split('').reduce((pre, cur) => {
+            const charCode = cur.charCodeAt(0)
+            if (charCode >= 0 && charCode <= 128) {
+                showLength += 1
+            } else {
+                showLength += 2
+            }
+            if (showLength <= maxLength) {
+                return pre + cur
+            }
+            return pre
+        }, '')
+    }
+
+
+    /**
+     * 获取字符串长度，英文字符 长度1，中文字符长度2
+     * @param {*} str
+     */
+    static getFullLength (str = '') {
+      return   str.split('').reduce((pre, cur) => {
+            const charCode = cur.charCodeAt(0)
+            if (charCode >= 0 && charCode <= 128) {
+                return pre + 1
+            }
+            return pre + 2
+        }, 0)
+    }
 
     // ------------------------------------------------------------------------ Blank
     static EMPTY = '';
