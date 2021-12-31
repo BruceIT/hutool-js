@@ -10,3 +10,4 @@ gen
 .github
 /webpack.config.js
 /src/
+/package-lock.json

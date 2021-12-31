@@ -1,12 +1,17 @@
 {
   "name": "hutool-core",
-  "version": "0.1.2",
+  "version": "0.1.4",
   "description": "JavaScript utils by ES6",
   "main": "dist/index.js",
   "scripts": {
     "start": "serve dist",
     "build": " webpack"
   },
+  "files": [
+    "src",
+    "dist/*.js",
+    "types"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/BruceIT/hutool-js.git"
@@ -24,5 +29,8 @@
     "serve": "^12.0.0",
     "webpack": "^5.65.0",
     "webpack-cli": "^4.9.1"
+  },
+  "dependencies": {
+    "hu-tool": "^1.2.40"
   }
 }
