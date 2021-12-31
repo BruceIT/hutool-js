@@ -4,7 +4,7 @@
  */
 import IdUtil from "./IdUtil";
 
-export default class StrUtil {
+export default class StrUtil  {
 
     static isAllUpperCase(str){
         if(str) {
